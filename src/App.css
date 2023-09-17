@@ -1,0 +1,19 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.app{
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    height: auto;
+}
+
+main{
+    display: flex;
+
+    height: 100vh;
+    flex: 1;
+    
+}

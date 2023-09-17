@@ -1,0 +1,14 @@
+{
+    "items": [
+        {
+            "tittle": "Planes",
+            "icon": "list_alt",
+            "url": "/planes"
+        },
+        {
+            "tittle": "Carrito",
+            "icon": "shopping_cart",
+            "url": "/carrito"
+        }
+    ]
+}

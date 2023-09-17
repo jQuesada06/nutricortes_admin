@@ -1,0 +1,10 @@
+.sidebar-link {
+  font-size: 18px;
+  /* Tamaño del título */
+  font-weight: semi-bold;
+  /* Peso de fuente en negrita */
+  color: #333;
+  /* Color del título (puedes personalizarlo) */
+  text-decoration: none;
+}
+
