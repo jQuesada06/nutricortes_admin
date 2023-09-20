@@ -1,11 +1,11 @@
-import Sidebar from "./layouts/sidebar/Sidebar"
+import Sidebar from "./layouts/sidebar/Sidebar";
 import Planes from "./pages/planes/planes";
 import Carrito from "./pages/carrito/Carrito";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import './App.css';
+import TablaConsultorios from "./pages/consultorios/TablaConsultorios";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "./App.css";
 
 function App() {
-
   return (
     <>
       <Router>
@@ -15,6 +15,7 @@ function App() {
             <Routes>
               <Route path="/planes" exact Component={Planes}></Route>
               <Route path="/carrito" Component={Carrito}></Route>
+              <Route path="/consultorios" Component={TablaConsultorios}></Route>
             </Routes>
           </main>
         </div>
@@ -23,4 +24,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
