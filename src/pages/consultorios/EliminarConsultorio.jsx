@@ -6,7 +6,7 @@ import {
   DialogActions,
   Button,
 } from "@mui/material";
-import { getFirestore, doc, deleteDoc } from "firebase/firestore";
+import { getFirestore, doc, deleteDoc } from "@firebase/firestore";
 import { toast } from "react-toastify";
 
 const EliminarConsultorio = (props) => {

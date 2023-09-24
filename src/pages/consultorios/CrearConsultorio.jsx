@@ -9,7 +9,7 @@ import {
   Grid,
   Tooltip,
 } from "@mui/material";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc } from "@firebase/firestore";
 import { toast } from "react-toastify";
 import "./Consultorios.css";
 

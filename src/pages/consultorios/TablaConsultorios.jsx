@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { TextField, IconButton, Button } from "@mui/material";
 import { Visibility, Delete, Edit } from "@mui/icons-material";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, getDocs } from "@firebase/firestore";
 import CrearConsultorio from "./CrearConsultorio";
 import EditarVerConsultorio from "./EditarVerConsultorio";
 import EliminarConsultorio from "./EliminarConsultorio";

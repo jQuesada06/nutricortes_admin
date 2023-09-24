@@ -9,6 +9,11 @@
             "tittle": "Carrito",
             "icon": "shopping_cart",
             "url": "/carrito"
+        },
+        {
+            "tittle": "Consultorios",
+            "icon": "shopping_cart",
+            "url": "/consultorios"
         }
     ]
 }
