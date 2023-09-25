@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import {
   Dialog,
   DialogTitle,
@@ -12,6 +13,7 @@ import {
 import { getFirestore, collection, addDoc } from "@firebase/firestore";
 import { toast } from "react-toastify";
 import "./Consultorios.css";
+import { db } from "../../firebase/config";
 
 const CrearConsultorio = (props) => {
   const { onClose, open, onCreate } = props;
@@ -32,7 +34,6 @@ const CrearConsultorio = (props) => {
   };
 
   const handleCreate = async () => {
-    const db = getFirestore();
     const collectionRef = collection(db, "consultorios");
     try {
       const consultorio = {

@@ -12,8 +12,8 @@ body {
 
 main{
     display: flex;
-
     height: 100vh;
     flex: 1;
-    
+    align-items: center;
+    justify-content: center;
 }

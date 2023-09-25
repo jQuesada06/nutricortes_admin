@@ -6,6 +6,7 @@ import { getFirestore, collection, getDocs } from "@firebase/firestore";
 import CrearConsultorio from "./CrearConsultorio";
 import EditarVerConsultorio from "./EditarVerConsultorio";
 import EliminarConsultorio from "./EliminarConsultorio";
+import { db } from "../../firebase/config";
 
 const TablaConsultorios = () => {
   const [rows, setRows] = React.useState([]);
@@ -109,7 +110,6 @@ const TablaConsultorios = () => {
   }, [rows, searchQuery]);
 
   useEffect(() => {
-    const db = getFirestore();
     const fetchData = async () => {
       const querySnapshot = await getDocs(collection(db, "consultorios"));
       const data = querySnapshot.docs.map((doc) => ({

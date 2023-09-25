@@ -11,6 +11,7 @@ import {
 import { getFirestore, setDoc, doc} from '@firebase/firestore'
 import { toast } from "react-toastify";
 import "./Consultorios.css";
+import { db } from "../../firebase/config";
 
 const EditarConsultorio = (props) => {
   const { onClose, open, object, onUpdate, flagView } = props;
@@ -33,7 +34,6 @@ const EditarConsultorio = (props) => {
   const handleLocationChange = (event) => setUbicacion(event.target.value);
 
   const handleUpdate = async () => {
-    const db = getFirestore();
     const collectionRef = doc(db, "consultorios", object.object.id);
     try {
       const consultorio = {

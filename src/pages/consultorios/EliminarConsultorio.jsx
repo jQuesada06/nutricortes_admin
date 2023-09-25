@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { getFirestore, doc, deleteDoc } from "@firebase/firestore";
 import { toast } from "react-toastify";
+import { db } from "../../firebase/config";
 
 const EliminarConsultorio = (props) => {
   const { onClose, open, object, onRemove } = props;
@@ -15,7 +16,6 @@ const EliminarConsultorio = (props) => {
   const handleClose = () => onClose();
 
   const handleDelete = async () => {
-    const db = getFirestore();
     const docRef = doc(db, "consultorios", object.object.id);
     try {
       await deleteDoc(docRef);
