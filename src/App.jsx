@@ -1,5 +1,5 @@
 import Sidebar from "./layouts/sidebar/Sidebar";
-import Planes from "./pages/planes/planes";
+import TablaPlanes from "./pages/planes/TablaPlanes";
 import Carrito from "./pages/carrito/Carrito";
 import TablaConsultorios from "./pages/consultorios/TablaConsultorios";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -13,7 +13,7 @@ function App() {
           <Sidebar></Sidebar>
           <main>
             <Routes>
-              <Route path="/planes" exact Component={Planes}></Route>
+              <Route path="/planes" exact Component={TablaPlanes}></Route>
               <Route path="/carrito" Component={Carrito}></Route>
               <Route path="/consultorios" Component={TablaConsultorios}></Route>
             </Routes>
