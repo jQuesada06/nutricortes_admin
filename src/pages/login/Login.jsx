@@ -79,7 +79,7 @@ const Login = () => {
           autoClose: 3000,
         });
         const userData = querySnapshot.docs[0].data();
-        navigate(userData.role ? "/adminhome" : "/home");
+        navigate("/adminhome");
       }
     } catch (error) {
       toast.error("Usuario Inválido", { autoClose: 3000 });
