@@ -10,12 +10,12 @@ import Login from "../components/login/Login";
 import Signup from "../components/login/Signup";
 import FinishSignup from "../components/login/FinishSingup";
 import Home from "../components/Home";
-import AdminHome from "../components/AdminHome";
+import AppRouter from "../AppRouter";
 import TablaConsultorios from "../components/consultorios/TablaConsultorios";
 import TablaReseñas from "../components/reseñas/TablaReseñas";
 import TablaRecetas from "../components/recetas/TablaRecetas";
 
-export const AppRouter = () => {
+export const LoginRouter = () => {
   const routes = createBrowserRouter([
     {
       path: "/",
@@ -33,13 +33,8 @@ export const AppRouter = () => {
       errorElement: <ErrorPage />,
     },
     {
-      path: "/home",
-      element: <Home />,
-      errorElement: <ErrorPage />,
-    },
-    {
       path: "/adminhome",
-      element: <AdminHome />,
+      element: <AppRouter />,
       errorElement: <ErrorPage />,
     },
     {
