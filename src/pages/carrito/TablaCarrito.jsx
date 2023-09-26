@@ -90,12 +90,13 @@ export default function TablaCarrito() {
   }, []);
 
   return (
+    <div style={{ height: 400, width: "95%" }}>
     <TableContainer component={Paper} className='main-container'>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell> Cleinte</TableCell>
+            <TableCell> Cliente</TableCell>
             <TableCell align="right">Precio Total</TableCell>
           </TableRow>
         </TableHead>
@@ -106,5 +107,6 @@ export default function TablaCarrito() {
         </TableBody>
       </Table>
     </TableContainer>
+    </div>
   );
 }
