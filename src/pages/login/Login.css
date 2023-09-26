@@ -1,0 +1,39 @@
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom: 1rem;
+  max-width: 60%;
+  margin: 0 auto;
+  margin-top: 1rem;
+  border: 2px solid gray;
+}
+
+.email-field,
+.password-field {
+  width: 100%;
+  margin: 10px;
+}
+
+.login-button {
+  width: auto;
+  margin-bottom: 10px;
+}
+
+.google-login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  width: 80%;
+}
+
+.google-login-container .google-login-button {
+  margin-left: 1rem;
+}
+
+.login-button {
+  width: 100%;
+}
