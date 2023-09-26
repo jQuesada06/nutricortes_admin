@@ -1,0 +1,24 @@
+.main-container{
+    flex: 1 0 0;
+    background-color: aquamarine;
+    margin-top: 60px;
+}
+
+.TextField {
+    margin: 2rem;
+  }
+  .nombre-container,
+  .descripcion-container, .imagen-container, .precio-container {
+    width: 100%;
+  }
+
+  .ubicacion-container {
+    height: 10rem;
+  }
+  .ErrorMessage {
+    color: red;
+  }
+  .buscar {
+    width: 50%;
+  }
+  
