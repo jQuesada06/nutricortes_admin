@@ -20,5 +20,16 @@
             "icon": "menu_book",
             "url": "/ebooks"
         }
+        ,
+        {
+            "tittle": "Preguntas Frecuentes",
+            "icon": "shopping_cart",
+            "url": "/preguntas"
+        },
+        {
+            "tittle": "Biografía",
+            "icon": "shopping_cart",
+            "url": "/biografia"
+        }
     ]
 }

@@ -1,0 +1,149 @@
+/* Estilos generales para el contenedor principal */
+.biografia-container {
+  background: linear-gradient(to right, #FFF0D3, #FFFFFF);
+  display: flex;
+  flex-direction: column; /* Cambiamos la dirección a columna */
+  align-items: center; /* Centramos horizontalmente */
+  text-align:justify; /* Centramos el texto horizontalmente */
+
+}
+
+.nombre-column {
+  margin-top: 50px;
+  flex: 1;
+  display: flex;
+}
+
+.codigo-column {
+  flex: 1;
+  display: flex;
+  font-family: 'Poppins Light';
+  font-size: 20px;
+  text-align: justify;
+  line-height: 2;
+}
+
+
+/* Estilos para la columna del contenido (descripción e imagen) */
+.contenido-column {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  margin-bottom: 100px;
+  margin-top: 50px;
+}
+
+/* Estilos para la columna de descripción */
+.descripcion-column {
+  flex: 60%;
+  border-radius: 10px;
+  box-sizing: border-box;
+  font-family: 'Poppins Light';
+  font-size: 20px;
+  text-align: justify;
+  line-height: 2;
+}
+
+/* Estilos para la columna de imagen */
+.imagen-column {
+  flex: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Estilos para el círculo de la imagen */
+.imagen-circle {
+  width: 60%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: transparent;
+  background-image: url("C:/Users/nalle/Downloads/rodaja-naranja_318-634766.png");
+  background-size: cover;
+  position: relative;
+}
+
+/* Estilos para los círculos naranjas detrás de la imagen */
+.orange-circles {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.orange-circle {
+  width: 30px;
+  height: 30px;
+  background-color: orange;
+  border-radius: 50%;
+}
+
+/* Estilos para los círculos naranjas detrás de la imagen */
+.orange-circle2 {
+  width: 150px;
+  height: 150px;
+  background-color: orange;
+  border-radius: 50%;
+}
+
+/* Estilos para la imagen redonda y que ocupa el 20% de la pantalla */
+.rounded-image {
+  width: 20vw;
+  height: 20vw;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+
+
+
+.secciones {
+  background: white;
+  width: 100%; /* Ancho del 100% de la pantalla */
+  margin-top: 20px; /* Espacio superior entre el contenido principal y las secciones */
+}
+
+/* Estilos para cada sección individual */
+.seccion {
+  width: 100%; /* Ancho del 100% de la pantalla */
+  margin-bottom: 20px; /* Espacio inferior entre secciones */
+  background-color: transparent; /* Fondo transparente */
+}
+
+/* Estilos para el título de la sección */
+.seccion h2 {
+  font-family: 'Poppins', sans-serif; /* Fuente Poppins */
+  font-size: 60px; /* Tamaño de fuente del título de la sección */
+  margin-bottom: 10px; /* Espacio inferior entre el título y la línea */
+  text-align: center; /* Centrar el texto horizontalmente */
+}
+
+/* Estilos para la línea degradada */
+.seccion .linea {
+  height: 3px; /* Altura de la línea */
+  width: 80%; /* Ancho del 100% de la pantalla */
+  background: linear-gradient(to right, #F5B12C, white); /* Degradado de naranja a blanco */
+  margin: 0 auto; /* Centrar horizontalmente */
+}
+
+/* Estilos para la descripción de la sección */
+.seccion p {
+  width: 80%;
+  margin: 0 auto; 
+  margin-top: 50px;
+  font-family: 'Poppins', sans-serif; /* Fuente Poppins */
+  font-size: 20px; /* Tamaño de fuente de la descripción de la sección */
+  text-align: center; /* Centrar el texto horizontalmente */
+  text-align: justify;
+  line-height: 2;
+}
+
+
+

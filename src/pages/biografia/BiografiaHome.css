@@ -1,0 +1,56 @@
+/* Estilos para el contenedor principal */
+.biografia-home-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    background: linear-gradient(to right, orange, white); /* Degradado de naranja a blanco */
+  }
+  
+  /* Estilos para la columna del degradado */
+  .columna-degradado {
+    flex: 1;
+    text-align: center;
+    color: white;
+  }
+  
+  /* Estilos para el título */
+  .columna-degradado h1 {
+    font-family: 'Poppins', sans-serif; /* Fuente Poppins */
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+  
+  /* Estilos para el código */
+  .columna-degradado p {
+    font-family: 'Poppins', sans-serif; /* Fuente Poppins */
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos para el botón "Ver Más" */
+  .ver-mas-button {
+    background-color: orange;
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Estilos para la columna de la foto */
+  .columna-foto {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Estilos para la foto */
+  .foto {
+    max-width: 100%;
+    max-height: 100%;
+  }
+  

@@ -1,0 +1,26 @@
+.TextField {
+  margin: 2rem;
+}
+.nombre-container,
+.ubicacion-container,
+.respuesta-container,
+.pregunta-container
+{
+  width: 90%;
+  margin-left: 5%;
+}
+.ubicacion-container {
+  height: 10rem;
+}
+.ErrorMessage {
+  color: red;
+}
+.buscar {
+  width: 50%;
+}
+
+
+.modal-container {
+  width: 80%;
+  margin-left: 10%;
+}

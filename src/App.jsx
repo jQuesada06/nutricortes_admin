@@ -3,6 +3,8 @@ import TablaPlanes from "./pages/planes/TablaPlanes";
 import TablaCarrito from "./pages/carrito/TablaCarrito";
 import TablaConsultorios from "./pages/consultorios/TablaConsultorios";
 import TablaEbooks from "./pages/ebooks/TablaEbook";
+import TablaFaqs from "./pages/faqs/TablaFaqs";
+import VerBiografia from "./pages/biografia/Biografia";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 
@@ -18,6 +20,8 @@ function App() {
               <Route path="/carrito" Component={TablaCarrito}></Route>
               <Route path="/consultorios" Component={TablaConsultorios}></Route>
               <Route path="/ebooks" Component={TablaEbooks}></Route>
+              <Route path="/preguntas" Component={TablaFaqs}></Route>
+              <Route path="/biografia" Component={VerBiografia}></Route>
             </Routes>
           </main>
         </div>
