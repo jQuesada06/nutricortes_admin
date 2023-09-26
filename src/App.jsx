@@ -5,6 +5,8 @@ import TablaConsultorios from "./pages/consultorios/TablaConsultorios";
 import TablaEbooks from "./pages/ebooks/TablaEbook";
 import TablaFaqs from "./pages/faqs/TablaFaqs";
 import VerBiografia from "./pages/biografia/Biografia";
+import TablaPromociones from "./pages/promociones/TablaPromociones";
+import TablaReto from "./pages/Reto/TablaReto";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 
@@ -22,6 +24,8 @@ function App() {
               <Route path="/ebooks" Component={TablaEbooks}></Route>
               <Route path="/preguntas" Component={TablaFaqs}></Route>
               <Route path="/biografia" Component={VerBiografia}></Route>
+              <Route path="/reto" Component={TablaReto}></Route>
+              <Route path="/promociones" Component={TablaPromociones}></Route>
             </Routes>
           </main>
         </div>

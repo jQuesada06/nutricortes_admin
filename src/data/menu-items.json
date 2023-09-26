@@ -30,6 +30,16 @@
             "tittle": "Biografía",
             "icon": "shopping_cart",
             "url": "/biografia"
+        },
+        {
+            "tittle": "Reto",
+            "icon": "fitness_center",
+            "url": "/reto"
+        },
+        {
+            "tittle": "Promociones",
+            "icon": "fitness_center",
+            "url": "/promociones"
         }
     ]
 }
