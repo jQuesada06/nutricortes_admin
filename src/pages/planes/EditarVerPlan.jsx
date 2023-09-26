@@ -140,7 +140,6 @@ const EditarPlan = (props) => {
                 autoComplete="off"
                 value={detalle}
                 onChange={handleDetalleChange}
-                
               />
             </Grid>
             <Grid item xs={1} >

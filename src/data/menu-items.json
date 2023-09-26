@@ -12,8 +12,13 @@
         },
         {
             "tittle": "Consultorios",
-            "icon": "shopping_cart",
+            "icon": "store",
             "url": "/consultorios"
+        },
+        {
+            "tittle": "eBooks",
+            "icon": "menu_book",
+            "url": "/ebooks"
         }
     ]
 }
