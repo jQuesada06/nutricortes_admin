@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import SearchBar from '../faqs/SearchBar';
 import "./Carrito.css"
 import { db } from '../../firebase/config';
 import { useState, useEffect } from 'react';
@@ -75,7 +76,19 @@ function Row(props) {
 
 export default function TablaCarrito() {
 
+  
   const [data, setData] = useState([]);
+  const [dataFiltered, setDataFiltered] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  
+  useEffect(() => {
+    const newFilteredRows = data.filter((row) =>
+      Object.values(row).some((value) =>
+        value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+    setDataFiltered(newFilteredRows);
+  }, [data, searchQuery]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -91,6 +104,9 @@ export default function TablaCarrito() {
 
   return (
     <div style={{ height: 400, width: "95%" }}>
+      <SearchBar
+            onSearch={(searchTerm) => setSearchQuery(searchTerm)}
+          />
     <TableContainer component={Paper} className='main-container'>
       <Table aria-label="collapsible table">
         <TableHead>
@@ -101,7 +117,7 @@ export default function TablaCarrito() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row) => (
+          {dataFiltered.map((row) => (
             <Row key={row.id} row={row} />
           ))}
         </TableBody>
