@@ -8,9 +8,10 @@ import {
   DialogActions,
   Grid,
 } from "@mui/material";
-import { getFirestore, setDoc, doc} from '@firebase/firestore'
+import { setDoc, doc } from "@firebase/firestore";
 import { toast } from "react-toastify";
 import "./Consultorios.css";
+import Autocomplete from "@mui/material/Autocomplete";
 import { db } from "../../firebase/config";
 
 const EditarConsultorio = (props) => {
@@ -19,19 +20,40 @@ const EditarConsultorio = (props) => {
   const [telefono, setTelefono] = useState("");
   const [ubicacion, setUbicacion] = useState("");
   const [formError, setFormError] = useState(false);
+  const [phoneError, setPhoneError] = useState(false);
+  const [horarios, setHorarios] = useState([]);
+
+  const options = ["Mañana", "Tarde"];
 
   useEffect(() => {
     if (object && object.object) {
       setNombre(object.object.Nombre);
       setTelefono(object.object.Telefono);
       setUbicacion(object.object.Ubicacion);
+      setHorarios(object.object.Horarios || []);
     }
   }, [object]);
 
   const handleClose = () => onClose();
   const handleNameChange = (event) => setNombre(event.target.value);
-  const handlePhoneChange = (event) => setTelefono(event.target.value);
   const handleLocationChange = (event) => setUbicacion(event.target.value);
+
+  const handlePhoneChange = (event) => {
+    let input = event.target.value.replace(/\D/g, "");
+
+    if (event.nativeEvent.inputType === "deleteContentBackward") {
+      if (input.length === 5) {
+        input = input.substring(0, input.length - 1);
+      }
+    } else {
+      input = input.slice(0, 8).replace(/(\d{4})(\d{0,4})/, "$1-$2");
+    }
+
+    const hasError = input.length < 8 && input.length > 0;
+
+    setTelefono(input);
+    setPhoneError(hasError);
+  };
 
   const handleUpdate = async () => {
     const collectionRef = doc(db, "consultorios", object.object.id);
@@ -41,13 +63,14 @@ const EditarConsultorio = (props) => {
         Nombre: nombre,
         Telefono: telefono,
         Ubicacion: ubicacion,
+        Horarios: horarios,
       };
       await setDoc(collectionRef, consultorio);
       toast.success("Actualizado", { autoClose: 3000 });
       onUpdate(consultorio);
     } catch (error) {
       alert(error);
-      toast.error("¡Error al actualizar al profesor!", {
+      toast.error("¡Error al actualizar!", {
         autoClose: 3000,
       });
     }
@@ -103,6 +126,38 @@ const EditarConsultorio = (props) => {
               multiline
               rows={4}
             />
+          </Grid>
+
+          <Grid item xs={12}>
+            {flagView ? (
+              <TextField
+                className="horarios-container"
+                label="Horarios"
+                disabled={flagView}
+                fullWidth
+                value={horarios}
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
+            ) : (
+              <Autocomplete
+                multiple
+                disabled={flagView}
+                className="horarios-container"
+                options={options}
+                value={horarios}
+                onChange={(event, newValue) => setHorarios(newValue)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    className="horarios-container"
+                    label="Horarios"
+                    fullWidth
+                  />
+                )}
+              />
+            )}
           </Grid>
           {!flagView && formError && (
             <Grid item xs={12} justifyContent="flex-end">

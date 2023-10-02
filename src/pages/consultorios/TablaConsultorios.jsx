@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { TextField, IconButton, Button } from "@mui/material";
+import { IconButton, Button, Typography } from "@mui/material";
 import { Visibility, Delete, Edit } from "@mui/icons-material";
-import { getFirestore, collection, getDocs } from "@firebase/firestore";
+import { collection, getDocs } from "@firebase/firestore";
 import CrearConsultorio from "./CrearConsultorio";
 import EditarVerConsultorio from "./EditarVerConsultorio";
 import EliminarConsultorio from "./EliminarConsultorio";
 import { db } from "../../firebase/config";
+import SearchBar from "./SearchBar";
 
 const TablaConsultorios = () => {
   const [rows, setRows] = React.useState([]);
@@ -29,17 +30,19 @@ const TablaConsultorios = () => {
       renderCell: (params) => (
         <>
           <IconButton
-            color="error"
-            aria-label="delete"
+            color="primary"
+            aria-label="view"
             variant="contained"
             size="small"
             onClick={() => {
-              setOpenDelete(true);
+              setOpenEditView(true);
+              setFlagView(true);
               setObject({ object: params.row });
             }}
           >
-            <Delete />
+            <Visibility />
           </IconButton>
+
           <IconButton
             color="success"
             aria-label="edit"
@@ -53,17 +56,16 @@ const TablaConsultorios = () => {
             <Edit />
           </IconButton>
           <IconButton
-            color="primary"
-            aria-label="view"
+            color="error"
+            aria-label="delete"
             variant="contained"
             size="small"
             onClick={() => {
-              setOpenEditView(true);
-              setFlagView(true);
+              setOpenDelete(true);
               setObject({ object: params.row });
             }}
           >
-            <Visibility />
+            <Delete />
           </IconButton>
         </>
       ),
@@ -123,15 +125,16 @@ const TablaConsultorios = () => {
   }, []);
 
   return (
-    <>
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <Typography variant="h4" gutterBottom>
+        Consultorios
+      </Typography>
       <div style={{ height: 400, width: "95%" }}>
-        <div style={{ textAlign: "right" }}>
-          <TextField
-            label="Buscar"
-            className="buscar"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
+        <div
+          style={{ textAlign: "right" }}
+          sx={{ display: "flex", flexDirection: "column" }}
+        >
+          <SearchBar onSearch={(searchTerm) => setSearchQuery(searchTerm)} />
           <Button
             variant="contained"
             onClick={() => {
@@ -139,16 +142,19 @@ const TablaConsultorios = () => {
             }}
             color="primary"
           >
-            Agregar Consultorio
+            Agregar
           </Button>
         </div>
-        <DataGrid
-          rows={filteredRows}
-          columns={columns}
-          autoPageSize
-          disableRowSelectionOnClick
-          disableColumnMenu={true}
-        />
+        <div style={{ height: 500, width: "100%" }}>
+          <DataGrid
+            rows={filteredRows}
+            columns={columns}
+            autoHeight
+            autoWidth
+            disableRowSelectionOnClick
+            disableColumnMenu={true}
+          />
+        </div>
       </div>
       <EditarVerConsultorio
         open={openEditView}
@@ -168,7 +174,7 @@ const TablaConsultorios = () => {
         onClose={handleClose}
         onCreate={handleCreate}
       />
-    </>
+    </div>
   );
 };
 

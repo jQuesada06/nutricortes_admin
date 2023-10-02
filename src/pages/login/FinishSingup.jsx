@@ -25,7 +25,7 @@ const FinishSignup = () => {
   const navigate = useNavigate();
 
   const displayNameParts = fullName.split(" "); // Assuming the space is the separator
-  const firstName = displayNameParts[0];
+  const name = displayNameParts[0];
   const lastName = displayNameParts.slice(1).join(" ");
 
   const [phone, setPhone] = useState("");
@@ -73,7 +73,6 @@ const FinishSignup = () => {
 
     setPhone(input);
     setPhoneError(hasError);
-    console.log(phoneError);
   };
 
   const handleCountryChange = (event) => {
@@ -107,7 +106,7 @@ const FinishSignup = () => {
     try {
       const role = false;
       const userData = {
-        firstName,
+        name,
         lastName,
         email,
         phone,
@@ -126,7 +125,6 @@ const FinishSignup = () => {
       });
       navigate("/login");
     } catch (error) {
-      console.error("Error finishing signup:", error);
       toast.error(`Error: ${error.message}`, { autoClose: 3000 });
     }
   };

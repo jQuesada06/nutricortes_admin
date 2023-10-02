@@ -1,21 +1,29 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppRouter from "./AppRouter";
 import { AuthRoutes } from "./router/AuthRoutes";
-import Login from "./pages/login/Login";
 import "./App.css";
 
-
 function App() {
+  const [logged, setLogged] = useState(false);
 
-  const [logged, setLogeed] = useState(false)
-  
+  useEffect(() => {
+    const storedIsLogged = localStorage.getItem("isLogged");
+    if (storedIsLogged === "true") {
+      setLogged(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("isLogged", logged.toString());
+  }, [logged]);
+
   return (
     <>
-      {logged ?
-        (<AppRouter />)
-        :
-        (<AuthRoutes logged={logged} setLogeed={setLogeed}/>)
-      }
+      {logged ? (
+        <AppRouter />
+      ) : (
+        <AuthRoutes logged={logged} setLogged={setLogged} />
+      )}
     </>
   );
 }

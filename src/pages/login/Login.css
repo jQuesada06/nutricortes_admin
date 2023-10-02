@@ -1,13 +1,15 @@
 .login-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   padding-left: 1em;
   padding-right: 1em;
   padding-bottom: 1rem;
   max-width: 60%;
   margin: 0 auto;
-  margin-top: 1rem;
+  margin-top: 50vh;
+  transform: translateY(-50%);
   border: 2px solid gray;
 }
 

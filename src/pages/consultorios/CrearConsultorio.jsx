@@ -14,6 +14,7 @@ import { getFirestore, collection, addDoc } from "@firebase/firestore";
 import { toast } from "react-toastify";
 import "./Consultorios.css";
 import { db } from "../../firebase/config";
+import Autocomplete from "@mui/material/Autocomplete";
 
 const CrearConsultorio = (props) => {
   const { onClose, open, onCreate } = props;
@@ -21,16 +22,37 @@ const CrearConsultorio = (props) => {
   const [telefono, setTelefono] = useState("");
   const [ubicacion, setUbicacion] = useState("");
   const [formError, setFormError] = useState(false);
+  const [phoneError, setPhoneError] = useState(false);
+  const [horarios, setHorarios] = useState([]);
+
+  const options = ["Mañana", "Tarde"];
 
   const handleClose = () => onClose();
   const handleNameChange = (event) => setNombre(event.target.value);
-  const handlePhoneChange = (event) => setTelefono(event.target.value);
   const handleLocationChange = (event) => setUbicacion(event.target.value);
 
   const isPhoneValid = (phone) => {
     if (phone.length === 0) return true;
     const phoneRegex = /^\d{4}-\d{4}$/;
     return phoneRegex.test(phone);
+  };
+
+  const handlePhoneChange = (event) => {
+    let input = event.target.value.replace(/\D/g, "");
+
+    if (event.nativeEvent.inputType === "deleteContentBackward") {
+      if (input.length === 5) {
+        input = input.substring(0, input.length - 1);
+      }
+    } else {
+      input = input.slice(0, 8).replace(/(\d{4})(\d{0,4})/, "$1-$2");
+    }
+
+    const hasError = input.length < 8 && input.length > 0;
+
+    setTelefono(input);
+    setPhoneError(hasError);
+    console.log(phoneError);
   };
 
   const handleCreate = async () => {
@@ -40,6 +62,7 @@ const CrearConsultorio = (props) => {
         Nombre: nombre,
         Telefono: telefono,
         Ubicacion: ubicacion,
+        Horarios: horarios,
       };
       const docRef = await addDoc(collectionRef, consultorio);
       consultorio.id = docRef.id;
@@ -68,6 +91,7 @@ const CrearConsultorio = (props) => {
     setNombre("");
     setTelefono("");
     setUbicacion("");
+    setHorarios([]);
   };
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -75,7 +99,7 @@ const CrearConsultorio = (props) => {
       <DialogContent>Favor llenar todos los campos.</DialogContent>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               className="nombre-container"
               label="Nombre"
@@ -84,7 +108,7 @@ const CrearConsultorio = (props) => {
               onChange={handleNameChange}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <Tooltip title="Ejemplo: 8888-8888" arrow followCursor>
               <TextField
                 className="telefono-container"
@@ -96,7 +120,7 @@ const CrearConsultorio = (props) => {
               />
             </Tooltip>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               className="ubicacion-container"
               label="Ubicacion"
@@ -105,6 +129,23 @@ const CrearConsultorio = (props) => {
               onChange={handleLocationChange}
               multiline
               rows={4}
+            />
+          </Grid>
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
+            <Autocomplete
+              multiple
+              className="horarios-container"
+              options={options}
+              value={horarios}
+              onChange={(event, newValue) => setHorarios(newValue)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  className="horarios-container"
+                  label="Horarios"
+                  fullWidth
+                />
+              )}
             />
           </Grid>
           {formError && (
