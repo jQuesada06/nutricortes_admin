@@ -16,7 +16,7 @@ import {
   query,
 } from "firebase/firestore";
 
-const Login = () => {
+const Login = ({ logged , setLogged}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -109,7 +109,8 @@ const Login = () => {
           autoClose: 3000,
         });
         const userData = querySnapshot.docs[0].data();
-        navigate(userData.role ? "/adminhome" : "/home");
+        console.log(logged)
+        setLogged(true)
       }
     } catch (error) {
       toast.error("Error signing in with Google", { autoClose: 3000 });

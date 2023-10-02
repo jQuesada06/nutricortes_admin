@@ -1,19 +1,20 @@
 import { useState } from "react";
 import AppRouter from "./AppRouter";
-import { LoginRouter } from "./router/LoginRouter";
+import { AuthRoutes } from "./router/AuthRoutes";
+import Login from "./pages/login/Login";
 import "./App.css";
 
 
 function App() {
 
-  const [user, setUser] = useState(false)
+  const [logged, setLogeed] = useState(false)
+  
   return (
     <>
-
-      {user ?
+      {logged ?
         (<AppRouter />)
         :
-        (<LoginRouter />)
+        (<AuthRoutes logged={logged} setLogeed={setLogeed}/>)
       }
     </>
   );
