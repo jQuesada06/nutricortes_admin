@@ -10,13 +10,11 @@ import Login from "../pages/login/Login";
 import Signup from "../pages/login/Signup";
 import FinishSignup from "../pages/login/FinishSingup";
 
-
 export const AuthRoutes = (props) => {
-
   const routes = createBrowserRouter([
     {
       path: "/",
-      element: <Login logged={props.logged} setLogged={props.setLogeed}/>,
+      element: <Login logged={props.logged} setLogged={props.setLogged} />,
       errorElement: <ErrorPage />,
     },
     {

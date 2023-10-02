@@ -16,7 +16,7 @@ import {
   query,
 } from "firebase/firestore";
 
-const Login = ({ logged , setLogged}) => {
+const Login = ({ logged, setLogged }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -79,7 +79,9 @@ const Login = ({ logged , setLogged}) => {
           autoClose: 3000,
         });
         const userData = querySnapshot.docs[0].data();
-        navigate("/adminhome");
+        localStorage.setItem("userData", JSON.stringify(userData));
+        localStorage.setItem("isLogged", "true");
+        setLogged(true);
       }
     } catch (error) {
       toast.error("Usuario Inválido", { autoClose: 3000 });
@@ -109,10 +111,13 @@ const Login = ({ logged , setLogged}) => {
           autoClose: 3000,
         });
         const userData = querySnapshot.docs[0].data();
-        console.log(logged)
-        setLogged(true)
+        localStorage.setItem("userData", JSON.stringify(userData));
+        localStorage.setItem("isLogged", "true");
+
+        setLogged(true);
       }
     } catch (error) {
+      console.log(error);
       toast.error("Error signing in with Google", { autoClose: 3000 });
     }
   };
