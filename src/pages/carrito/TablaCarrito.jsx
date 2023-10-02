@@ -17,7 +17,7 @@ import SearchBar from '../faqs/SearchBar';
 import "./Carrito.css"
 import { db } from '../../firebase/config';
 import { useState, useEffect } from 'react';
-import { collection, getDocs } from "@firebase/firestore";
+import { collection, getDocs, orderBy } from "@firebase/firestore";
 
 
 function Row(props) {
@@ -38,6 +38,9 @@ function Row(props) {
         </TableCell>
         <TableCell component="th" scope="row">
           {row.nombreUsuario}
+        </TableCell>
+        <TableCell component="th" scope="row">
+          {`${row.fecha.toDate().getDate().toString()}/${row.fecha.toDate().getMonth() + 1}/${row.fecha.toDate().getFullYear().toString()}`}
         </TableCell>
         <TableCell align="right">{row.precioTotal + " ₡"}</TableCell>
       </TableRow>
@@ -92,11 +95,12 @@ export default function TablaCarrito() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const querySnapshot = await getDocs(collection(db, "Carrito"));
+      const querySnapshot = await getDocs(collection(db, "Carrito"), orderBy("fecha", "desc"));
       const data = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
+      setDataFiltered(data)
       setData(data)
     };
     fetchData().catch(console.error);
@@ -113,6 +117,7 @@ export default function TablaCarrito() {
           <TableRow>
             <TableCell />
             <TableCell> Cliente</TableCell>
+            <TableCell> Fecha</TableCell>
             <TableCell align="right">Precio Total</TableCell>
           </TableRow>
         </TableHead>
