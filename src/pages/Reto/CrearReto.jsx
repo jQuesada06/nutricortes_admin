@@ -175,79 +175,78 @@ const CrearReto = (props) => {
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle style={{ textAlign: "center" }}>Crear Nuevo Reto</DialogTitle>
-      <DialogContentText>Complete los datos del nuevo reto:</DialogContentText>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-        <Grid item xs={12}>
+        <Grid item xs={12} marginLeft={3}>
             Activo
-            <Checkbox
+            <Checkbox 
               checked={activo}
               onChange={handleActivoChange}
               color="primary" // Opcional: cambia el color a "secondary" o "default" según tus preferencias
           />
           </Grid>
           <br />
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               label="Descripcion"
-              className="descripcion-container"
+              className="modal-container"
               value={descripcion}
               onChange={handleDescripcionChange}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               label="Fecha de inicio del reto actual"
-              className="fechaInicio-container"
+              className="modal-container"
               value={fechaInicial}
               onChange={handleFechaInicialChange}
               type="date"
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12}sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               label="Fecha final del reto actual"
-              className="fechaFinal-container"
+              className="modal-container"
               value={fechaFinal}
               onChange={handleFechaFinalChange}
               type="date"
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               label="Fecha del proximo reto actual"
-              className="fechaProximo-container"
+              className="modal-container"
               value={fechaProximo}
               onChange={handleFechaProximoChange}
               type="date"
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12}sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               label="Nombre"
-              className="nombre-container"
+              className="modal-container"
               value={nombre}
               onChange={handleNombreChange}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12}sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               label="Plus"
-              className="plus-container"
+              className="modal-container"
               value={plus}
               onChange={handlePlusChange}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12}sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               label="Premios"
-              className="premios-container"
+              className="modal-container"
               value={premios}
               onChange={handlePremiosChange}
             />
           </Grid>
           {patrocinadores.map((patrocinador, index) => (
-            <Grid item xs={12} key={index}>
+            <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }} key={index}>
               <input
                 type="file"
                 accept="image/*"
@@ -264,7 +263,7 @@ const CrearReto = (props) => {
               />
               <br />
               <br />
-              <TextField
+              <TextField 
                 label="Link del Patrocinador"
                 value={patrocinador.link}
                 onChange={(e) => handlePatrocinadorChange(e, index, "link")}
@@ -282,7 +281,7 @@ const CrearReto = (props) => {
             <br />
             </Grid>
           ))}
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <Button
               variant="contained"
               color="primary"

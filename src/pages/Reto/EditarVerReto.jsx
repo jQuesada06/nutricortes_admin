@@ -207,14 +207,9 @@ const EditarReto = (props) => {
       <DialogTitle style={{ textAlign: "center" }}>
         {flagView ? "Ver Reto" : "Actualizar Reto"}
       </DialogTitle>
-      <DialogContent>
-        {flagView
-          ? "Detalle del Reto"
-          : "Edite los datos del Reto existente."}
-      </DialogContent>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={12} marginLeft={3}>
             Activo
             <Checkbox
               checked={activo}
@@ -223,20 +218,20 @@ const EditarReto = (props) => {
           />
           </Grid>
           <br />
-          <Grid item xs={12}>
+          <Grid item xs={12}sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               label="Descripcion"
-              className="descripcion-container"
+              className="modal-container"
               value={descripcion}
               onChange={handleDescripcionChange}
               disabled={flagView}
             />
           </Grid>
           <br />
-          <Grid item xs={12}>
+          <Grid item xs={12}sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               label="Fecha de inicio del reto actual"
-              className="fechaInicio-container"
+              className="modal-container"
               value={fechaInicial}
               onChange={handleFechaInicialChange}
               disabled={flagView}
@@ -244,10 +239,10 @@ const EditarReto = (props) => {
             />
           </Grid>
           <br />
-          <Grid item xs={12}>
+          <Grid item xs={12}sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               label="Fecha final del reto actual"
-              className="fechaFinal-container"
+              className="modal-container"
               value={fechaFinal}
               onChange={handleFechaFinalChange}
               disabled={flagView}
@@ -255,10 +250,10 @@ const EditarReto = (props) => {
             />
           </Grid>
           <br />
-          <Grid item xs={12}>
+          <Grid item xs={12}sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               label="Fecha del proximo reto actual"
-              className="fechaProximo-container"
+              className="modal-container"
               value={fechaProximo}
               onChange={handleFechaProximoChange}
               disabled={flagView}
@@ -266,30 +261,30 @@ const EditarReto = (props) => {
             />
           </Grid>
           <br />
-          <Grid item xs={12}>
+          <Grid item xs={12}sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               label="Nombre"
-              className="nombre-container"
+              className="modal-container"
               value={nombre}
               onChange={handleNombreChange}
               disabled={flagView}
             />
           </Grid>
           <br />
-          <Grid item xs={12}>
+          <Grid item xs={12}sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               label="Plus"
-              className="plus-container"
+              className="modal-container"
               value={plus}
               onChange={handlePlusChange}
               disabled={flagView}
             />
           </Grid>
           <br />
-          <Grid item xs={12}>
+          <Grid item xs={12}sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               label="Premios"
-              className="premios-container"
+              className="modal-container"
               value={premios}
               onChange={handlePremiosChange}
               disabled={flagView}
@@ -297,7 +292,7 @@ const EditarReto = (props) => {
           </Grid>
           <br />
           {patrocinadores.map((patrocinador) => (
-            <Grid item xs={12} key={patrocinador.id}>
+            <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }} key={patrocinador.id}>
               <input
                 type="file"
                 accept="image/*"
