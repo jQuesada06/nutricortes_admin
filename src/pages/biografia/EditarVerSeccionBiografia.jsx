@@ -68,9 +68,9 @@ const EditarVerSeccionBiografia = (props) => {
   };
 
   return (
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>
-        {flagView ? "Ver Sección de Biografía" : "Actualizar Sección de Biografía"}
+    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
+      <DialogTitle style={{ textAlign: "center" }}>
+        {flagView ? "Ver sección de Biografía" : "Actualizar sección de Biografía"}
       </DialogTitle>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
@@ -81,6 +81,8 @@ const EditarVerSeccionBiografia = (props) => {
               value={titulo}
               onChange={handleTituloChange}
               disabled={flagView}
+              multiline
+              rows={2}
             />
           </Grid>
           <Grid item xs={12} container justifyContent="center" alignItems="center" mb={2}>
@@ -91,12 +93,12 @@ const EditarVerSeccionBiografia = (props) => {
               onChange={handleDescripcionChange}
               disabled={flagView}
               multiline
-              rows={4}
+              rows={6}
             />
           </Grid>
           {!flagView && formError && (
             <Grid item xs={12} justifyContent="flex-end">
-              <p style={{ color: "red" }}>Llene todos los formularios.</p>
+              <p style={{ color: "red",  textAlign: "center" }}>Llene todos los formularios</p>
             </Grid>
           )}
           <Grid item xs={12} justifyContent="flex-end" >
@@ -111,10 +113,10 @@ const EditarVerSeccionBiografia = (props) => {
                 </Button>
               ) : (
                 <>
-                  <Button onClick={handleClose} variant="contained" color="error">
+                  <Button onClick={handleClose}>
                     Cerrar
                   </Button>
-                  <Button type="submit" variant="contained" color="success">
+                  <Button type="submit" variant="contained" >
                     Guardar
                   </Button>
                 </>

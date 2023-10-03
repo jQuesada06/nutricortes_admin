@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { TextField, IconButton, Button } from "@mui/material";
+import { TextField, IconButton, Button, Typography } from "@mui/material";
 import { Visibility, Delete, Edit } from "@mui/icons-material";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import CrearFaqs from "./CrearFaqs";
@@ -27,30 +27,7 @@ const TablaFaqs = () => {
       width: 150,
       renderCell: (params) => (
         <>
-          <IconButton
-            color="error"
-            aria-label="delete"
-            variant="contained"
-            size="small"
-            onClick={() => {
-              setOpenDelete(true);
-              setObject({ object: params.row });
-            }}
-          >
-            <Delete />
-          </IconButton>
-          <IconButton
-            color="success"
-            aria-label="edit"
-            variant="contained"
-            size="small"
-            onClick={() => {
-              setOpenEditView(true);
-              setObject({ object: params.row });
-            }}
-          >
-            <Edit />
-          </IconButton>
+
           <IconButton
             color="primary"
             aria-label="view"
@@ -63,6 +40,33 @@ const TablaFaqs = () => {
             }}
           >
             <Visibility />
+          </IconButton>
+    
+
+          <IconButton
+            color="success"
+            aria-label="edit"
+            variant="contained"
+            size="small"
+            onClick={() => {
+              setOpenEditView(true);
+              setObject({ object: params.row });
+            }}
+          >
+            <Edit />
+          </IconButton>
+
+          <IconButton
+            color="error"
+            aria-label="delete"
+            variant="contained"
+            size="small"
+            onClick={() => {
+              setOpenDelete(true);
+              setObject({ object: params.row });
+            }}
+          >
+            <Delete />
           </IconButton>
         </>
       ),
@@ -124,9 +128,13 @@ const TablaFaqs = () => {
 
   return (
     <>
-     
-      <div style={{ height: 400, width: "80%" , marginLeft: "10%", marginTop: "10%"}}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', }}>
+      <div style={{ height: 371, width: "80%"  }}>
+        {/* Agrega el título grande */}
+        <Typography variant="h4" gutterBottom style={{ textAlign: "center" }}>
+          Preguntas Frecuentes
+        </Typography>
+        {/* Envuelve el botón "Agregar" y la barra de búsqueda */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: "3%" }}>
           <SearchBar
             onSearch={(searchTerm) => setSearchQuery(searchTerm)}
           />

@@ -4,7 +4,7 @@ import { AuthRoutes } from "./router/AuthRoutes";
 import "./App.css";
 
 function App() {
-  const [logged, setLogged] = useState(false);
+  const [logged, setLogged] = useState(true);
 
   useEffect(() => {
     const storedIsLogged = localStorage.getItem("isLogged");
