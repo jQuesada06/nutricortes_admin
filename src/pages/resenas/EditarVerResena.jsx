@@ -72,50 +72,47 @@ const EditarResena = (props) => {
   };
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>
-        {flagView ? "Ver Resena" : "Actualizar Resena"}
+      <DialogTitle style={{ textAlign: "center" }}>
+        {flagView ? "Ver Reseña" : "Actualizar Reseña"}
       </DialogTitle>
-      <DialogContent>
-        {flagView
-          ? "Detalla de de la Resena"
-          : "Edite a los datos de la Resena existente."}
-      </DialogContent>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={12}sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
                label="Id"
-               className="id-container"
+               className="modal-container"
                autoComplete="off"
                value={id}
                onChange={handleIdChange}
                disabled={flagView}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12}sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               label="Usuario"
-              className="usuario-container"
+              className="modal-container"
               value={usuario}
               autoComplete="off"
               onChange={handleUsuarioChange}
               disabled={flagView}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12}sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
              label="Detalle"
-             className="detalle-container"
+             className="modal-container"
              value={detalle}
              autoComplete="off"
              onChange={handleDetalleChange}
              disabled={flagView}
+             multiline
+             rows={3}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12}sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
-             label="Puntuacion"
-             className="puntiacion-container"
+             label="Puntuación"
+             className="modal-container"
              value={puntuacion}
              autoComplete="off"
              onChange={handlePuntuacionChange}
@@ -125,7 +122,7 @@ const EditarResena = (props) => {
 
           {!flagView && formError && (
             <Grid item xs={12} justifyContent="flex-end">
-              <p style={{ color: "red" }}>Llene todos los formularios.</p>
+              <p style={{ color: "red" , textAlign: "center" }}>Llene todos los formularios</p>
             </Grid>
           )}
           <Grid item xs={12} justifyContent="flex-end">

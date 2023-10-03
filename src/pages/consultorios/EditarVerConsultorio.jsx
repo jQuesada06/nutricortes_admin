@@ -99,14 +99,9 @@ const EditarConsultorio = (props) => {
   };
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>
+      <DialogTitle style={{ textAlign: "center" }}>
         {flagView ? "Ver Consultorio" : "Actualizar Consultorio"}
       </DialogTitle>
-      <DialogContent>
-        {flagView
-          ? "Detallade del Consultorio"
-          : "Edite a los datos del Consultorio existente."}
-      </DialogContent>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
@@ -202,7 +197,7 @@ const EditarConsultorio = (props) => {
           </Grid>
           {!flagView && formError && (
             <Grid item xs={12} justifyContent="flex-end">
-              <p style={{ color: "red" }}>Llene todos los formularios.</p>
+              <p style={{ color: "red", textAlign: "center" }}>Llene todos los formularios</p>
             </Grid>
           )}
           <Grid item xs={12} justifyContent="flex-end">

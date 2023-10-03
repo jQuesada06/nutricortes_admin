@@ -62,10 +62,10 @@ const CrearPromociones = (props) => {
       <DialogTitle style={{ textAlign: "center" }}>Agregar nueva promoción</DialogTitle>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={12} container justifyContent="center" alignItems="center" mb={2}>
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               className="modal-container"
-              label="Titulo"
+              label="Título"
               autoComplete="off"
               value={titulo}
               onChange={handleTituloChange}
@@ -74,7 +74,7 @@ const CrearPromociones = (props) => {
             />
           </Grid>
           
-          <Grid item xs={12} container justifyContent="center" alignItems="center" mb={2}>
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               className="modal-container"
               label="Descripción"

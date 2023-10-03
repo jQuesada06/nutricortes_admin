@@ -64,7 +64,7 @@ const CrearFaqs = (props) => {
       </DialogTitle>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}  >
-          <Grid item xs={12} container justifyContent="center" alignItems="center" mb={2}>
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               className="modal-container"
               label="Pregunta"
@@ -75,7 +75,7 @@ const CrearFaqs = (props) => {
               rows={3}
             />
           </Grid>
-          <Grid item xs={12} container justifyContent="center" alignItems="center" mb={2}>
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               className="modal-container"
               label="Respuesta"

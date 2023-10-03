@@ -31,17 +31,19 @@ const TablaEbooks = () => {
       renderCell: (params) => (
         <>
           <IconButton
-            color="error"
-            aria-label="delete"
+            color="primary"
+            aria-label="view"
             variant="contained"
             size="small"
             onClick={() => {
-              setOpenDelete(true);
+              setOpenEditView(true);
+              setFlagView(true);
               setObject({ object: params.row });
             }}
           >
-            <Delete />
+            <Visibility />
           </IconButton>
+
           <IconButton
             color="success"
             aria-label="edit"
@@ -54,18 +56,18 @@ const TablaEbooks = () => {
           >
             <Edit />
           </IconButton>
+
           <IconButton
-            color="primary"
-            aria-label="view"
+            color="error"
+            aria-label="delete"
             variant="contained"
             size="small"
             onClick={() => {
-              setOpenEditView(true);
-              setFlagView(true);
+              setOpenDelete(true);
               setObject({ object: params.row });
             }}
           >
-            <Visibility />
+            <Delete />
           </IconButton>
         </>
       ),
@@ -126,7 +128,7 @@ const TablaEbooks = () => {
 
   return (
     <>
-      <div style={{ height: 400, width: "80%" }}>
+      <div style={{ height: 371, width: "80%" }}>
         <Typography variant="h4" gutterBottom style={{ textAlign: "center" }}>
           Ebooks
         </Typography>
@@ -141,7 +143,7 @@ const TablaEbooks = () => {
             }}
             color="primary"
           >
-            Agregar eBook
+            Agregar
           </Button>
         </div>
         <DataGrid

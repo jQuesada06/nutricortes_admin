@@ -77,68 +77,69 @@ const EditarReceta = (props) => {
   };
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>
+      <DialogTitle style={{ textAlign: "center" }}>
         {flagView ? "Ver Receta" : "Actualizar Receta"}
       </DialogTitle>
-      <DialogContent>
-        {flagView
-          ? "Detallade de la Receta"
-          : "Edite a los datos de la Receta existente."}
-      </DialogContent>
+
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              label="Categoria"
-              className="categoria-container"
-              value={categoria}
-              onChange={handleCategoriaChange}
-              disabled={flagView}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-             label="Video"
-             className="video-container"
-             value={video}
-             onChange={handleVideoChange}
-             disabled={flagView}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-               label="Titulo"
-               className="titulo-container"
-               value={titulo}
-               onChange={handleTituloChange}
-               disabled={flagView}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-                 label="Ingredientes"
-                 className="ingredientes-container"
-                 value={ingredientes}
-                 onChange={handleIngredientesChange}
-                 disabled={flagView}
-                 multiline
-            />
-          </Grid>
-          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
-            <TextField
-              label="Descripcion"
-              className="descripcion-container"
-              value={descripcion}
-              onChange={handleDescripcionChange}
-              disabled={flagView}
-              multiline
-            />
-          </Grid>
+          <Grid item xs={12}sx={{ marginLeft: 2, marginRight: 2 }}>
+              <TextField
+                label="Título"
+                className="modal-container"
+                value={titulo}
+                onChange={handleTituloChange}
+                disabled={flagView}
+              />
+            </Grid>
 
+            <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
+              <TextField
+                label="Categoría"
+                className="modal-container"
+                value={categoria}
+                onChange={handleCategoriaChange}
+                disabled={flagView}
+              />
+            </Grid>
+
+            <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
+              <TextField
+                label="Descripción"
+                className="modal-container"
+                value={descripcion}
+                onChange={handleDescripcionChange}
+                disabled={flagView}
+                multiline
+                rows={4}
+              />
+            </Grid>
+
+            <Grid item xs={12}sx={{ marginLeft: 2, marginRight: 2 }}>
+              <TextField
+                label="Ingredientes"
+                className="modal-container"
+                value={ingredientes}
+                onChange={handleIngredientesChange}
+                disabled={flagView}
+                multiline
+                rows={2}
+              />
+            </Grid>
+
+            <Grid item xs={12}sx={{ marginLeft: 2, marginRight: 2 }}>
+              <TextField
+              label="Link Video"
+              className="modal-container"
+              value={video}
+              onChange={handleVideoChange}
+              disabled={flagView}
+              />
+            </Grid>
 
           {!flagView && formError && (
             <Grid item xs={12} justifyContent="flex-end">
-              <p style={{ color: "red" }}>Llene todos los formularios.</p>
+              <p style={{ color: "red",  textAlign: "center" }}>Llene todos los formularios</p>
             </Grid>
           )}
           <Grid item xs={12} justifyContent="flex-end">

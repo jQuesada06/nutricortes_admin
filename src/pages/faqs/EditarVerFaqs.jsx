@@ -66,7 +66,7 @@ const EditarFaqs = (props) => {
       </DialogTitle>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={12} container justifyContent="center" alignItems="center" mb={2}>
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               label="Pregunta"
               className="modal-container"
@@ -77,7 +77,7 @@ const EditarFaqs = (props) => {
               rows={3}
             />
           </Grid>
-          <Grid item xs={12} container justifyContent="center" alignItems="center" mb={2}>
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               label="Respuesta"
               className="modal-container"

@@ -20,11 +20,11 @@ const TablaRecetas = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
 
   const columns = [
-    { field: "Titulo", headerName: "Titulo", width: 200 },
-    { field: "Categoria", headerName: "Categoria", width: 200 },
-    { field: "Video", headerName: "Video", width: 200 },
-    { field: "Ingredientes", headerName: "Ingredientes", width: 300 },
-    { field: "Descripcion", headerName: "Descripcion", width: 300 },
+    { field: "Titulo", headerName: "Titulo", width: 250 },
+    { field: "Categoria", headerName: "Categoria", width: 250 },
+    //{ field: "Video", headerName: "Video", width: 200 },
+    //{ field: "Ingredientes", headerName: "Ingredientes", width: 300 },
+    { field: "Descripcion", headerName: "Descripcion", width: 450 },
     {
       field: "actions",
       headerName: "Acciones",
@@ -127,13 +127,17 @@ const TablaRecetas = () => {
   }, []);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      <div style={{ height: 400, width: "100%" }}>
-        <div
-          style={{ textAlign: "right" }}
-          sx={{ display: "flex", flexDirection: "column" }}
-        >
-          <SearchBar onSearch={(searchTerm) => setSearchQuery(searchTerm)} />
+    <>
+      <div style={{ height: 371, width: "80%"  }}>
+        {/* Agrega el título grande */}
+        <Typography variant="h4" gutterBottom style={{ textAlign: "center" }}>
+          Recetas
+        </Typography>
+        {/* Envuelve el botón "Agregar" y la barra de búsqueda */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: "3%" }}>
+          <SearchBar
+            onSearch={(searchTerm) => setSearchQuery(searchTerm)}
+          />
           <Button
             variant="contained"
             onClick={() => {
@@ -144,16 +148,13 @@ const TablaRecetas = () => {
             Agregar
           </Button>
         </div>
-        <div style={{ height: 500, width: "100%" }}>
-          <DataGrid
-            rows={filteredRows}
-            columns={columns}
-            autoHeight
-            autoWidth
-            disableRowSelectionOnClick
-            disableColumnMenu={true}
-          />
-        </div>
+        <DataGrid 
+          rows={filteredRows}
+          columns={columns}
+          autoPageSize
+          disableRowSelectionOnClick
+          disableColumnMenu={true}
+        />
       </div>
       <EditarVerReceta
         open={openEditView}
@@ -173,7 +174,7 @@ const TablaRecetas = () => {
         onClose={handleClose}
         onCreate={handleCreate}
       />
-    </div>
+    </>
   );
 };
 

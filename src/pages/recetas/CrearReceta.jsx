@@ -77,34 +77,14 @@ const CrearReceta = (props) => {
   };
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Agregar Nueva Receta</DialogTitle>
-      <DialogContent>Favor llenar todos los campos.</DialogContent>
+      <DialogTitle style={{ textAlign: "center" }}>Agregar nueva Receta</DialogTitle>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
-            <TextField
-            className="categoria-container"
-            label="Categoria"
-            autoComplete="off"
-            value={categoria}
-            onChange={handleCategoriaChange}
-            />
-          </Grid>
 
-          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>      
-              <TextField
-              className="video-container"
-              label="Video"
-              autoComplete="off"
-              value={video}
-              onChange={handleVideoChange}
-              />
-          </Grid>
-
-          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
+        <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
-               className="titulo-container"
-               label="Titulo"
+               className="modal-container"
+               label="Título"
                autoComplete="off"
                value={titulo}
                onChange={handleTituloChange}
@@ -113,28 +93,51 @@ const CrearReceta = (props) => {
 
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
-              className="ingredientes-container"
-              label="Ingredientes"
-              autoComplete="off"
-              value={ingredientes}
-              onChange={handleIngredientesChange}
+            className="modal-container"
+            label="Categoría"
+            autoComplete="off"
+            value={categoria}
+            onChange={handleCategoriaChange}
             />
           </Grid>
 
-          <Grid item xs={12} sx={{marginLeft: 2, marginRight: 2, marginBottom: 2}}>
+          <Grid item xs={12} sx={{marginLeft: 2, marginRight: 2}}>
             <TextField
-             className="descripcion-container"
-             label="Descripcion"
+             className="modal-container"
+             label="Descripción"
              autoComplete="off"
              value={descripcion}
              onChange={handleDescripcionChange}
              multiline
+             rows={4}
             />
           </Grid>
 
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
+            <TextField
+              className="modal-container"
+              label="Ingredientes"
+              autoComplete="off"
+              value={ingredientes}
+              onChange={handleIngredientesChange}
+              rows={2}
+            />
+          </Grid>
+
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>      
+              <TextField
+              className="modal-container"
+              label="Link video"
+              autoComplete="off"
+              value={video}
+              onChange={handleVideoChange}
+              />
+          </Grid>
+
+
           {formError && (
             <Grid item xs={12} justifyContent="flex-end">
-              <p style={{ color: "red" }}>Llene todos los formularios.</p>
+              <p style={{ color: "red", textAlign: "center"  }}>Llene todos los formularios</p>
             </Grid>
           )}
           <Grid item xs={12} justifyContent="flex-end">

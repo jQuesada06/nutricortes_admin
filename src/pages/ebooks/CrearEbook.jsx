@@ -112,8 +112,7 @@ const CrearEbook = (props) => {
   };
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Agregar Nuevo eBook</DialogTitle>
-      <DialogContent>Favor llenar todos los campos.</DialogContent>
+      <DialogTitle style={{ textAlign: "center" }} >Agregar nuevo eBook</DialogTitle>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12} sx={{ marginTop: 2, marginLeft: 2, marginRight: 2 }}>
@@ -128,7 +127,7 @@ const CrearEbook = (props) => {
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               className="descripcion-container"
-              label="Descripcion"
+              label="Descripción"
               autoComplete="off"
               value={descripcion}
               onChange={handleDescriptionChange}
@@ -171,7 +170,7 @@ const CrearEbook = (props) => {
           </Grid>
           {formError && (
             <Grid item xs={12} justifyContent="flex-end" sx={{ marginLeft: 2, marginRight: 2 }}>
-              <p style={{ color: "red" }}>Llene todos los Campos.</p>
+              <p style={{ color: "red", textAlign: "center"  }}>Llene todos los Campos</p>
             </Grid>
           )}
           <Grid item xs={12} justifyContent="flex-end">

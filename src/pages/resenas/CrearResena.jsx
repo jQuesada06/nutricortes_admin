@@ -73,13 +73,12 @@ const CrearResena = (props) => {
   };
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Agregar Nueva Resena</DialogTitle>
-      <DialogContent>Favor llenar todos los campos.</DialogContent>
+      <DialogTitle style={{ textAlign: "center" }} >Agregar nueva Reseña</DialogTitle>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
-               className="id-container"
+               className="modal-container"
                label="Id"
                autoComplete="off"
                value={id}
@@ -88,7 +87,7 @@ const CrearResena = (props) => {
           </Grid>
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
               <TextField
-                 className="usuario-container"
+                 className="modal-container"
                  label="Usuario"
                  autoComplete="off"
                  value={usuario}
@@ -97,17 +96,19 @@ const CrearResena = (props) => {
           </Grid>
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
-              className="detalle-container"
+              className="modal-container"
               label="Detalle"
               autoComplete="off"
               value={detalle}
               onChange={handleDetalleChange}
+              multiline
+              rows={3}
             />
           </Grid>
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
           <TextField
-                 className="puntuacion-container"
-                 label="Puntuacion"
+                 className="modal-container"
+                 label="Puntuación"
                  autoComplete="off"
                  value={puntuacion}
                  onChange={handlePuntuacionChange}
@@ -115,7 +116,7 @@ const CrearResena = (props) => {
           </Grid>
           {formError && (
             <Grid item xs={12} justifyContent="flex-end">
-              <p style={{ color: "red" }}>Llene todos los formularios.</p>
+              <p style={{ color: "red", textAlign: "center" }}>Llene todos los formularios</p>
             </Grid>
           )}
           <Grid item xs={12} justifyContent="flex-end">

@@ -7,7 +7,7 @@ import CrearResena from "./CrearResena";
 import EditarVerResena from "./EditarVerResena";
 import EliminarResena from "./EliminarResena";
 import { db } from "../../firebase/config";
-import SearchBar from "../faqs/SearchBar";
+import SearchBar from "./SearchBar";
 
 const TablaResenas = () => {
   const [rows, setRows] = React.useState([]);
@@ -126,13 +126,17 @@ const TablaResenas = () => {
   }, []);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      <div style={{ height: 400, width: "100%" }}>
-        <div
-          style={{ textAlign: "right" }}
-          sx={{ display: "flex", flexDirection: "column" }}
-        >
-          <SearchBar onSearch={(searchTerm) => setSearchQuery(searchTerm)} />
+    <>
+      <div style={{ height: 371, width: "80%"  }}>
+        {/* Agrega el título grande */}
+        <Typography variant="h4" gutterBottom style={{ textAlign: "center" }}>
+          Reseñas
+        </Typography>
+        {/* Envuelve el botón "Agregar" y la barra de búsqueda */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: "3%" }}>
+          <SearchBar
+            onSearch={(searchTerm) => setSearchQuery(searchTerm)}
+          />
           <Button
             variant="contained"
             onClick={() => {
@@ -143,16 +147,13 @@ const TablaResenas = () => {
             Agregar
           </Button>
         </div>
-        <div style={{ height: 500, width: "100%" }}>
-          <DataGrid
-            rows={filteredRows}
-            columns={columns}
-            autoHeight
-            autoWidth
-            disableRowSelectionOnClick
-            disableColumnMenu={true}
-          />
-        </div>
+        <DataGrid 
+          rows={filteredRows}
+          columns={columns}
+          autoPageSize
+          disableRowSelectionOnClick
+          disableColumnMenu={true}
+        />
       </div>
       <EditarVerResena
         open={openEditView}
@@ -172,7 +173,7 @@ const TablaResenas = () => {
         onClose={handleClose}
         onCreate={handleCreate}
       />
-    </div>
+    </>
   );
 };
 

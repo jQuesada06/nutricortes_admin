@@ -126,7 +126,7 @@ const TablaConsultorios = () => {
 
   return (
     <>
-      <div style={{ height: 400, width: "80%" }}>
+      <div style={{ height: 371, width: "80%" }}>
         <Typography variant="h4" gutterBottom style={{ textAlign: "center" }}>
           Consultorios
         </Typography>
