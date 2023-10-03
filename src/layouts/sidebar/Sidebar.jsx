@@ -22,6 +22,7 @@ import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import './Styles.css'
 import Logo from '../../assets/logoNutriCortes.svg'
+import AccountMenu from '../accountSettings/AccountSettings';
 
 const drawerWidth = 240;
 
@@ -90,7 +91,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
-const Sidebar = () => {
+const Sidebar = (props) => {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const [activeItem, setActiveItem] = React.useState(null);
@@ -123,33 +124,30 @@ const Sidebar = () => {
                     <Typography variant="h6" noWrap component="div">
                         Sistema Administrativo Nutricortés
                     </Typography>
-                    <Stack direction="row" spacing={2} sx={{marginLeft: 'auto', alignItems: 'center'}}>
-                        <Typography variant="h7" noWrap component="div">
-                            Carla
-                        </Typography>
-                        <Avatar alt="Cindy Baker" src="https://cdn.pixabay.com/photo/2021/02/22/16/34/portrait-6040876_1280.jpg"  sx={{ width: 45, height: 'auto' }} />
+                    <Stack direction="row" spacing={2} sx={{ marginLeft: 'auto', alignItems: 'center' }}>
+                    <AccountMenu setLogged={props.setLogged}></AccountMenu>
                     </Stack>
                 </Toolbar>
 
             </AppBar>
             <Drawer variant="permanent" open={open}>
-                <DrawerHeader sx={{alignItems:'center'}}>
-                    <img src={Logo} alt="" style={{width: '140px', height:'auto', right:'10px'}} />
-                    <IconButton onClick={handleDrawerClose} sx={{left:'8px'}}>
+                <DrawerHeader sx={{ alignItems: 'center' }}>
+                    <img src={Logo} alt="" style={{ width: '140px', height: 'auto', right: '10px' }} />
+                    <IconButton onClick={handleDrawerClose} sx={{ left: '8px' }}>
                         {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                     </IconButton>
                 </DrawerHeader>
                 <Divider />
                 <List>
                     {menuItems.items.map((element, index) => (
-                        <ListItem key={index} disablePadding sx={{ display: 'block', backgroundColor:  activeItem === index ? 'primary.main' : 'transparent', }} onClick={() => setActiveItem(index)} >
+                        <ListItem key={index} disablePadding sx={{ display: 'block', backgroundColor: activeItem === index ? 'primary.main' : 'transparent', }} onClick={() => setActiveItem(index)} >
                             <Link to={element.url} className='sidebar-link'>
                                 <ListItemButton
                                     sx={{
                                         minHeight: 48,
                                         justifyContent: open ? 'initial' : 'center',
                                         px: 2.5,
-                                        
+
                                     }}
                                 >
                                     <ListItemIcon
@@ -165,7 +163,7 @@ const Sidebar = () => {
                                         </span>
                                     </ListItemIcon>
 
-                                    <ListItemText primary={element.tittle} sx={{ opacity: open ? 1 : 0 , color: activeItem === index ? 'white' : 'gray'}} />
+                                    <ListItemText primary={element.tittle} sx={{ opacity: open ? 1 : 0, color: activeItem === index ? 'white' : 'gray' }} />
 
                                 </ListItemButton>
                             </Link>

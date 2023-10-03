@@ -24,7 +24,7 @@ function App() {
   return (
     <>
       {logged ? (
-        <AppRouter />
+        <AppRouter setLogged={setLogged} />
       ) : (
         <AuthRoutes logged={logged} setLogged={setLogged} />
       )}

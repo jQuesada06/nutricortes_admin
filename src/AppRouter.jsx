@@ -13,12 +13,12 @@ import { BrowserRouter as Router, Route, Routes,  } from "react-router-dom";
 import "./App.css";
 
 
-const AppRouter = () => {
+const AppRouter = (props) => {
   return (
     <>
       <Router>
         <div className="app">
-          <Sidebar></Sidebar>
+          <Sidebar setLogged={props.setLogged} ></Sidebar>
           <main>
             <Routes>
               <Route path="/" exact Component={Home}></Route>
