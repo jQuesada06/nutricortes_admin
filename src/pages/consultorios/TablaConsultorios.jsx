@@ -126,13 +126,12 @@ const TablaConsultorios = () => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      <Typography variant="h4" gutterBottom display={flex}>
+      <Typography variant="h4" gutterBottom style={{ textAlign: "center" }}>
         Consultorios
       </Typography>
       <div style={{ height: 400, width: "100%" }}>
         <div
-          style={{ textAlign: "right" }}
-          sx={{ display: "flex", flexDirection: "column" }}
+          style={{ display: 'flex', justifyContent: 'space-between', marginBottom: "3%" }}
         >
           <SearchBar onSearch={(searchTerm) => setSearchQuery(searchTerm)} />
           <Button

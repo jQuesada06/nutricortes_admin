@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { TextField, IconButton, Button } from "@mui/material";
+import { IconButton, Button, Typography } from "@mui/material";
 import { Visibility, Delete, Edit } from "@mui/icons-material";
 import { collection, getDocs } from "@firebase/firestore";
 import CrearPlan from "./CrearPlan";
+import SearchBar from "../faqs/SearchBar";
 import EditarVerPlan from "./EditarVerPlan";
 import EliminarPlan from "./EliminarPlan";
 import { db } from "../../firebase/config";
@@ -21,9 +22,9 @@ const TablaPlanes = () => {
 
   const columns = [
     { field: "Nombre", headerName: "Nombre", width: 250 },
-    { field: "Modalidad", headerName: "Modalidad", width: 150 },
-    { field: "Detalles", headerName: "Detalles", width: 500 },
-    { field: "Precio", headerName: "Precio", width: 500 },
+    { field: "Modalidad", headerName: "Modalidad", width: 120 },
+    { field: "Detalles", headerName: "Detalles", width: 300 },
+    { field: "Precio", headerName: "Precio", width: 150 },
     {
       field: "actions",
       headerName: "Acciones",
@@ -126,13 +127,13 @@ const TablaPlanes = () => {
 
   return (
     <>
-      <div style={{ height: 400, width: "95%" }}>
-        <div style={{ textAlign: "right" }}>
-          <TextField
-            label="Buscar"
-            className="buscar"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+      <div style={{ height: 400, width: "80%" }}>
+        <Typography variant="h4" gutterBottom style={{ textAlign: "center" }}>
+          Planes
+        </Typography>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: "3%" }}>
+          <SearchBar
+            onSearch={(searchTerm) => setSearchQuery(searchTerm)}
           />
           <Button
             variant="contained"
