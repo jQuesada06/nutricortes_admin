@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { TextField, IconButton, Button } from "@mui/material";
+import { TextField, IconButton, Button, Typography } from "@mui/material";
 import { Visibility, Delete, Edit } from "@mui/icons-material";
 import { getFirestore, collection, getDoc, doc, setDoc } from "firebase/firestore";
 import CrearSeccionBiografia from "./CrearSeccionBiografia";
@@ -28,9 +28,10 @@ const TablaSeccionBiografia = () => {
     setFlagView(flagView);
   };
 
+
   const columns = [
-    { field: "titulo", headerName: "Título", width: 200 },
-    { field: "descripcion", headerName: "Descripción", width: 200 },
+    { field: "titulo", headerName: "Título", width: 400 },
+    { field: "descripcion", headerName: "Descripción", width: 600 },
     {
       field: "actions",
       headerName: "Acciones",
@@ -38,17 +39,17 @@ const TablaSeccionBiografia = () => {
       renderCell: (params) => (
         <>
           <IconButton
-            color="error"
-            aria-label="delete"
+            color="primary"
+            aria-label="view"
             variant="contained"
             size="small"
             onClick={() => {
-              setOpenDelete(true);
-              setObject(params.row);
-            }}
-          >
-            <Delete />
+              handleEditView(params.row, true, rows); 
+                    }}
+            >
+            <Visibility />
           </IconButton>
+
           <IconButton
             color="success"
             aria-label="edit"
@@ -57,20 +58,22 @@ const TablaSeccionBiografia = () => {
             onClick={() => {
               setOpenEditView(true);
               setObject(params.row);
-            }}
-          >
+                    }}
+            >
             <Edit />
           </IconButton>
+
           <IconButton
-            color="primary"
-            aria-label="view"
+            color="error"
+            aria-label="delete"
             variant="contained"
             size="small"
             onClick={() => {
-              handleEditView(params.row, true, rows); // Pasa 'rows' como prop
-            }}
-          >
-            <Visibility />
+              setOpenDelete(true);
+              setObject(params.row);
+                  }}
+            >
+            <Delete />
           </IconButton>
         </>
       ),
@@ -126,6 +129,17 @@ const TablaSeccionBiografia = () => {
     setFlagView(false);
   };
 
+
+
+  useEffect(() => {
+    const newFilteredRows = rows.filter((row) =>
+      Object.values(row).some((value) =>
+        value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+    setFilteredRows(newFilteredRows);
+  }, [rows, searchQuery]);
+
   useEffect(() => {
     const db = getFirestore();
     const biografiaCollectionRef = collection(db, "Biografia");
@@ -151,9 +165,12 @@ const TablaSeccionBiografia = () => {
 
   return (
     <>
-      <div style={{ height: 400, width: "80%", marginLeft: "10%", marginTop: "10%" }}>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <SearchBar onSearch={(searchTerm) => setSearchQuery(searchTerm)} />
+      <div style={{ height: 371, width: "100%"  }}>
+        {/* Envuelve el botón "Agregar" y la barra de búsqueda */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: "3%" }}>
+          <SearchBar
+            onSearch={(searchTerm) => setSearchQuery(searchTerm)}
+          />
           <Button
             variant="contained"
             onClick={() => {
@@ -164,7 +181,7 @@ const TablaSeccionBiografia = () => {
             Agregar
           </Button>
         </div>
-        <DataGrid
+        <DataGrid 
           rows={filteredRows}
           columns={columns}
           autoPageSize

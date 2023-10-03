@@ -43,10 +43,10 @@ const EliminarSeccionBiografia = (props) => {
       <DialogTitle>Confirmación de borrado</DialogTitle>
       <DialogContent>¿Estás seguro que deseas borrar esta sección?</DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} variant="contained" color="success">
+        <Button onClick={handleClose} >
           Cancelar
         </Button>
-        <Button onClick={handleDelete} variant="contained" color="error">
+        <Button onClick={handleDelete} color="error">
           Borrar
         </Button>
       </DialogActions>

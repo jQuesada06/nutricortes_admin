@@ -61,8 +61,10 @@ const CrearSeccionBiografia = (props) => {
   };
 
   return (
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Nueva sección de Biografía</DialogTitle>
+    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
+      <DialogTitle style={{ textAlign: "center" }}>
+        Nueva sección de Biografía
+      </DialogTitle>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12} container justifyContent="center" alignItems="center" mb={2}>
@@ -72,6 +74,8 @@ const CrearSeccionBiografia = (props) => {
               autoComplete="off"
               value={titulo}
               onChange={handleTituloChange}
+              multiline
+              rows={2}
             />
           </Grid>
           <Grid item xs={12} container justifyContent="center" alignItems="center" mb={2}>
@@ -82,20 +86,20 @@ const CrearSeccionBiografia = (props) => {
               value={descripcion}
               onChange={handleDescripcionChange}
               multiline
-              rows={4}
+              rows={6}
             />
           </Grid>
           {formError && (
             <Grid item xs={12} justifyContent="flex-end">
-              <p style={{ color: "red" }}>Llene todos los formularios.</p>
+              <p style={{ color: "red",  textAlign: "center" }}>Llene todos los formularios</p>
             </Grid>
           )}
           <Grid item xs={12} justifyContent="flex-end">
             <DialogActions>
-              <Button onClick={handleClose} variant="contained" color="error">
+              <Button onClick={handleClose} >
                 Cerrar
               </Button>
-              <Button type="submit" variant="contained" color="success">
+              <Button type="submit" variant="contained" >
                 Guardar
               </Button>
             </DialogActions>
