@@ -100,7 +100,7 @@ const EditarPlan = (props) => {
       <DialogTitle>
         {flagView ? "Ver Plan" : "Actualizar Plan"}
       </DialogTitle>
-      <DialogContent>
+      <DialogContent style={{ marginBottom: "20px",  overflow: "hidden", overflowY: "hidden"}}>
         {flagView
           ? "Detallade del Plan"
           : "Edite a los datos del Plan existente."}

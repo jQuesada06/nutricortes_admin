@@ -116,7 +116,10 @@ export default function TablaCarrito() {
   }, []);
 
   return (
-    <div style={{ height: 400, width: "95%" }}>
+    <div style={{ height: 400, width: "80%" }}>
+      <Typography variant="h4" gutterBottom style={{ textAlign: "center" }}>
+        Carrito
+      </Typography>
       <SearchBar
             onSearch={(searchTerm) => setSearchQuery(searchTerm)}
           />
