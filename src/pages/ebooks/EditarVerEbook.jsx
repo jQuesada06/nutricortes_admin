@@ -6,12 +6,17 @@ import {
   TextField,
   Button,
   DialogActions,
-  Grid
+  Grid,
+  Card,
+  CardContent,
+  CardMedia
 } from "@mui/material";
 import { setDoc, doc } from '@firebase/firestore'
 import { toast } from "react-toastify";
 import "./Ebook.css";
-import { db } from "../../firebase/config";
+import { db, storage } from "../../firebase/config";
+import { getDownloadURL, ref, uploadBytes, deleteObject } from "firebase/storage";
+
 
 const EditarEbook = (props) => {
   const { onClose, open, object, onUpdate, flagView } = props;
@@ -20,6 +25,20 @@ const EditarEbook = (props) => {
   const [imagen, setImagen] = useState("");
   const [precio, setPrecio] = useState("");
   const [formError, setFormError] = useState(false);
+  const [imageURL, setImageURL] = useState(null);
+  const [image, setImage] = useState(null);
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    setImage(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImageURL(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   useEffect(() => {
     if (object && object.object) {
@@ -33,19 +52,49 @@ const EditarEbook = (props) => {
   const handleClose = () => onClose();
   const handleNameChange = (event) => setNombre(event.target.value);
   const handleDescriptionChange = (event) => setDescripcion(event.target.value);
-  const handleImagenChange = (event) => setImagen(event.target.value);
   const handlePrecioChange = (event) => setPrecio(event.target.value);
+
+
+  const deleteImage = async () => {
+    const ebooksRef = ref(storage, imagen)
+    deleteObject(ebooksRef).then(() => {
+      // File deleted successfully
+    }).catch((error) => {
+      console.log(error)
+    });
+  };
+
+  const uploadImage = async () => {
+    if (!image) {
+      alert('Selecciona un archivo primero.');
+      return;
+    }
+    const timestamp = new Date().getTime(); // Obtiene la marca de tiempo actual en milisegundos
+    const imageName = `${timestamp}_${image.name}`;
+    const ebooksRef = ref(storage, `ebooks/${imageName}`)
+    try {
+      await uploadBytes(ebooksRef, image);
+
+      // Obtiene la URL de descarga del archivo subido
+      const downloadURL = await getDownloadURL(ebooksRef);
+      return downloadURL;
+    } catch (error) {
+      toast.error("Error al cargar la imagen", { autoClose: 3000 });
+    }
+  };
+
   
-
-
   const handleUpdate = async () => {
     const collectionRef = doc(db, "Ebooks", object.object.id);
+    await deleteImage();
+    const url = await uploadImage();
     try {
+      
       const plan = {
         id: object.object.id,
         Nombre: nombre,
         Descripcion: descripcion,
-        Imagen: imagen,
+        Imagen: url,
         Precio: precio
       };
       await setDoc(collectionRef, plan);
@@ -54,20 +103,31 @@ const EditarEbook = (props) => {
     } catch (error) {
       alert(error);
       toast.error("¡Error al actualizar el ebook!", {
+        autoClose: 3000,
       });
     }
     handleClose();
+    setImage(null);
+  };
+
+  const clearFields = () => {
+    setNombre("");
+    setDescripcion("");
+    setPrecio("");
+    setImage(null)
+    setImageURL(null)
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (nombre === "" || descripcion === "" || imagen === "" || precio === "") {
+    if (nombre === "" || descripcion === "" || precio === "") {
       setFormError(true);
       return;
     }
     handleUpdate();
     setFormError(false);
   };
+
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>
@@ -101,14 +161,42 @@ const EditarEbook = (props) => {
             />
           </Grid>
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
-            <TextField
-              className="imagen-container"
-              label="Imagen"
-              autoComplete="off"
-              value={imagen}
-              onChange={handleImagenChange}
-              disabled={flagView}
-            />
+            <Card>
+              {flagView ? (
+                <CardContent >
+                <CardMedia sx={{ marginTop: "20px" }}
+                  component="img"
+                  alt="Imagen seleccionada"
+                  height="auto"
+                  image={imagen}
+                />
+              </CardContent>
+              ) : (
+                <CardContent >
+                <input
+                  type="file"
+                  accept="image/*"
+                  id="image-upload"
+                  style={{ display: 'none' }}
+                  onChange={handleImageUpload}
+                />
+                <label htmlFor="image-upload">
+                  <Button variant="outlined" component="span">
+                    Subir imagen
+                  </Button>
+                </label>
+                {imageURL && (
+                  <CardMedia sx={{ marginTop: "20px" }}
+                    component="img"
+                    alt="Imagen seleccionada"
+                    height="auto"
+                    image={imageURL}
+                  />
+                )}
+              </CardContent>
+              )}
+
+            </Card>
           </Grid>
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
@@ -137,7 +225,7 @@ const EditarEbook = (props) => {
                 </Button>
               ) : (
                 <>
-                  <Button onClick={handleClose}>Cerrar</Button>
+                  <Button onClick={(() => { handleClose(); clearFields() })}>Cerrar</Button>
                   <Button type="submit" variant="contained" color="primary">
                     Guardar
                   </Button>
