@@ -131,12 +131,12 @@ const EditarEbook = (props) => {
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>
-        {flagView ? "Ver Plan" : "Actualizar Plan"}
+        {flagView ? "Ver Ebook" : "Actualizar Ebook"}
       </DialogTitle>
-      <DialogContent>
+      <DialogContent  style={{ marginBottom: "20px",  overflow: "hidden", overflowY: "hidden"}} >
         {flagView
-          ? "Detallade del Plan"
-          : "Edite a los datos del Plan existente."}
+          ? "Detallade del Ebook"
+          : "Edite a los datos del Ebook existente."}
       </DialogContent>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
