@@ -120,7 +120,7 @@ const Sidebar = () => {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap component="div">
-                        Sistema Administrativo Nutri Córtes
+                        Sistema Administrativo Nutricortés
                     </Typography>
                     <Stack direction="row" spacing={2} sx={{marginLeft: 'auto', alignItems: 'center'}}>
                         <Typography variant="h7" noWrap component="div">

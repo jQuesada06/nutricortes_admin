@@ -1,24 +1,36 @@
-.TextField {
-  margin: 2rem;
+/* Contenedor para nombre y código */
+.nombreCodigoContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 300px; /* Altura fija de 300px */
+  padding: 16px;
 }
-.nombre-container,
-.ubicacion-container {
+
+/* Contenedor para descripción e imagen */
+.descripcionImagenContainer {
+  display: flex;
+  flex-direction: column;
+  height: 300px; /* Altura fija de 300px */
   width: 100%;
-}
-.ubicacion-container {
-  height: 10rem;
-}
-.ErrorMessage {
-  color: red;
-}
-.buscar {
-  width: 50%;
+  padding: 16px;
 }
 
-/* Estilos CSS para la página VerBiografia.js */
+/* Subcontenedor para descripción */
+.descripcionContainer {
+  flex: 2; /* Ocupa 2/3 del espacio vertical */
+  overflow: hidden; /* Limita el tamaño de la descripción */
+}
 
-/* Estilo para el botón Seleccionar Imagen */
-#image-input {
-  display: none;
-  color: white;
+/* Subcontenedor para imagen */
+.imagenContainer {
+  flex: 1; /* Ocupa 1/3 del espacio vertical */
+  overflow: hidden; /* Limita el tamaño de la imagen */
+}
+
+/* Estilos para la imagen */
+.imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Mantiene la relación de aspecto y ajusta la imagen */
 }

@@ -60,8 +60,8 @@ const EditarFaqs = (props) => {
     setFormError(false);
   };
   return (
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>
+    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
+      <DialogTitle  style={{ textAlign: "center" }}>
         {flagView ? "Ver pregunta frecuente" : "Actualizar pregunta frecuente"}
       </DialogTitle>
       <form onSubmit={handleSubmit}>
@@ -74,7 +74,7 @@ const EditarFaqs = (props) => {
               onChange={handlePreguntaChange}
               disabled={flagView}
               multiline
-              rows={4}
+              rows={3}
             />
           </Grid>
           <Grid item xs={12} container justifyContent="center" alignItems="center" mb={2}>
@@ -85,12 +85,12 @@ const EditarFaqs = (props) => {
               onChange={handleRespuestaChange}
               disabled={flagView}
               multiline
-              rows={4}
+              rows={6}
             />
           </Grid>
           {!flagView && formError && (
             <Grid item xs={12} justifyContent="flex-end">
-              <p style={{ color: "red" }}>Llene todos los formularios.</p>
+              <p style={{ color: "red", }}>Llene todos los formularios.</p>
             </Grid>
           )}
           <Grid item xs={12} justifyContent="flex-end" >
@@ -105,10 +105,10 @@ const EditarFaqs = (props) => {
                 </Button>
               ) : (
                 <>
-                  <Button onClick={handleClose} variant="contained" color="error">
+                  <Button onClick={handleClose}>
                     Cerrar
                     </Button>
-                  <Button type="submit" variant="contained" color="success">
+                  <Button type="submit" variant="contained" color="primary">
                     Guardar
                   </Button>
                 </>

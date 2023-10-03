@@ -1,14 +1,9 @@
 {
     "items": [
         {
-            "tittle": "Planes",
-            "icon": "list_alt",
-            "url": "/planes"
-        },
-        {
-            "tittle": "Carrito",
-            "icon": "shopping_cart",
-            "url": "/carrito"
+            "tittle": "Biografía",
+            "icon": "person_book",
+            "url": "/biografia"
         },
         {
             "tittle": "Consultorios",
@@ -16,30 +11,39 @@
             "url": "/consultorios"
         },
         {
-            "tittle": "eBooks",
-            "icon": "menu_book",
-            "url": "/ebooks"
-        }
-        ,
-        {
-            "tittle": "Preguntas Frecuentes",
-            "icon": "shopping_cart",
-            "url": "/preguntas"
-        },
-        {
-            "tittle": "Biografía",
-            "icon": "shopping_cart",
-            "url": "/biografia"
-        },
-        {
             "tittle": "Reto",
             "icon": "fitness_center",
             "url": "/reto"
         },
         {
+            "tittle": "Planes",
+            "icon": "list_alt",
+            "url": "/planes"
+        },
+        {
+            "tittle": "eBooks",
+            "icon": "menu_book",
+            "url": "/ebooks"
+        },
+        {
+            "tittle": "Recetas",
+            "icon": "restaurant",
+            "url": "/recetas"
+        },
+        {
+            "tittle": "Carrito",
+            "icon": "shopping_cart",
+            "url": "/carrito"
+        },
+        {
             "tittle": "Promociones",
-            "icon": "fitness_center",
+            "icon": "sell",
             "url": "/promociones"
+        },
+        {
+            "tittle": "Preguntas Frecuentes",
+            "icon": "psychology_alt",
+            "url": "/preguntas"
         }
     ]
 }

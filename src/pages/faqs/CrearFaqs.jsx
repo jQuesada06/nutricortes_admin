@@ -58,8 +58,10 @@ const CrearFaqs = (props) => {
     setRespuesta("");
   };
   return (
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Nueva pregunta frecuente</DialogTitle>
+    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
+      <DialogTitle style={{ textAlign: "center" }}>
+        Nueva pregunta frecuente
+      </DialogTitle>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}  >
           <Grid item xs={12} container justifyContent="center" alignItems="center" mb={2}>
@@ -70,7 +72,7 @@ const CrearFaqs = (props) => {
               value={pregunta}
               onChange={handlePreguntaChange}
               multiline
-              rows={4}
+              rows={3}
             />
           </Grid>
           <Grid item xs={12} container justifyContent="center" alignItems="center" mb={2}>
@@ -81,20 +83,20 @@ const CrearFaqs = (props) => {
               value={respuesta}
               onChange={handleRespuestaChange}
               multiline
-              rows={4}
+              rows={6}
             />
           </Grid>
           {formError && (
             <Grid item xs={12} justifyContent="flex-end">
-              <p style={{ color: "red" }}>Llene todos los formularios.</p>
+              <p style={{ color: "red" , textAlign: "center" }}>Llene todos los formularios</p>
             </Grid>
           )}
           <Grid item xs={12} justifyContent="flex-end">
             <DialogActions>
-              <Button onClick={handleClose} variant="contained" color="error">
+              <Button onClick={handleClose} >
                 Cerrar
                 </Button>
-              <Button type="submit" variant="contained" color="success">
+              <Button type="submit" variant="contained" color="primary">
                 Guardar
               </Button>
             </DialogActions>

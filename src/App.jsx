@@ -4,18 +4,22 @@ import { AuthRoutes } from "./router/AuthRoutes";
 import "./App.css";
 
 function App() {
-  const [logged, setLogged] = useState(false);
+
+  const init = () => {
+    const UserLogged = localStorage.getItem("isLogged");
+    return UserLogged;
+  }
+
+  const UserLogged = init();
+  const [logged, setLogged] = useState(init());
+  
 
   useEffect(() => {
-    const storedIsLogged = localStorage.getItem("isLogged");
-    if (storedIsLogged === "true") {
+    const UserLogged = localStorage.getItem("isLogged");
+    if (UserLogged === "true") {
       setLogged(true);
     }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("isLogged", logged.toString());
-  }, [logged]);
+  }, [UserLogged]);
 
   return (
     <>

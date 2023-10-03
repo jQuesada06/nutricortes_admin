@@ -13,10 +13,12 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import SearchBar from '../faqs/SearchBar';
 import "./Carrito.css"
 import { db } from '../../firebase/config';
 import { useState, useEffect } from 'react';
-import { collection, getDocs } from "@firebase/firestore";
+import { collection, getDocs, orderBy, query } from "@firebase/firestore";
+import { TablePagination } from '@mui/material';
 
 
 function Row(props) {
@@ -37,6 +39,9 @@ function Row(props) {
         </TableCell>
         <TableCell component="th" scope="row">
           {row.nombreUsuario}
+        </TableCell>
+        <TableCell component="th" scope="row">
+          {`${row.fecha.toDate().getDate().toString()}/${row.fecha.toDate().getMonth() + 1}/${row.fecha.toDate().getFullYear().toString()}`}
         </TableCell>
         <TableCell align="right">{row.precioTotal + " ₡"}</TableCell>
       </TableRow>
@@ -75,15 +80,36 @@ function Row(props) {
 
 export default function TablaCarrito() {
 
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(3);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+  
   const [data, setData] = useState([]);
+  const [dataFiltered, setDataFiltered] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  
+  useEffect(() => {
+    const newFilteredRows = data.filter((row) =>
+      Object.values(row).some((value) =>
+        value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+    setDataFiltered(newFilteredRows);
+  }, [data, searchQuery]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const querySnapshot = await getDocs(collection(db, "Carrito"));
+      const carritoRef = collection(db, 'Carrito');
+      const queryOrdenada = query(carritoRef, orderBy('fecha', 'desc'));
+      const querySnapshot = await getDocs(queryOrdenada);
       const data = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
+      setDataFiltered(data)
       setData(data)
     };
     fetchData().catch(console.error);
@@ -91,22 +117,33 @@ export default function TablaCarrito() {
 
   return (
     <div style={{ height: 400, width: "95%" }}>
+      <SearchBar
+            onSearch={(searchTerm) => setSearchQuery(searchTerm)}
+          />
     <TableContainer component={Paper} className='main-container'>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
             <TableCell />
             <TableCell> Cliente</TableCell>
+            <TableCell> Fecha</TableCell>
             <TableCell align="right">Precio Total</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row) => (
+          {dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
             <Row key={row.id} row={row} />
           ))}
         </TableBody>
       </Table>
     </TableContainer>
+    <TablePagination
+        component="div"
+        count={dataFiltered.length}
+        page={page}
+        onPageChange={handleChangePage}
+        rowsPerPage={rowsPerPage}
+      />
     </div>
   );
 }

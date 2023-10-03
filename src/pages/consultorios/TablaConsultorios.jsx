@@ -129,7 +129,7 @@ const TablaConsultorios = () => {
       <Typography variant="h4" gutterBottom display={flex}>
         Consultorios
       </Typography>
-      <div style={{ height: 400, width: "95%" }}>
+      <div style={{ height: 400, width: "100%" }}>
         <div
           style={{ textAlign: "right" }}
           sx={{ display: "flex", flexDirection: "column" }}
