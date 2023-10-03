@@ -24,12 +24,16 @@ const CrearConsultorio = (props) => {
   const [formError, setFormError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
   const [horarios, setHorarios] = useState([]);
+  const [latitud, setLatitud] = useState(0);
+  const [longitud, setLongitud] = useState(0);
 
   const options = ["Mañana", "Tarde"];
 
   const handleClose = () => onClose();
   const handleNameChange = (event) => setNombre(event.target.value);
   const handleLocationChange = (event) => setUbicacion(event.target.value);
+  const handleLatitudChange = (event) => setLatitud(event.target.value);
+  const handleLogitudChange = (event) => setLongitud(event.target.value);
 
   const isPhoneValid = (phone) => {
     if (phone.length === 0) return true;
@@ -52,7 +56,6 @@ const CrearConsultorio = (props) => {
 
     setTelefono(input);
     setPhoneError(hasError);
-    console.log(phoneError);
   };
 
   const handleCreate = async () => {
@@ -63,6 +66,10 @@ const CrearConsultorio = (props) => {
         Telefono: telefono,
         Ubicacion: ubicacion,
         Horarios: horarios,
+        Coordenadas: {
+          Latitud: latitud,
+          Longitud: longitud,
+        },
       };
       const docRef = await addDoc(collectionRef, consultorio);
       consultorio.id = docRef.id;
@@ -80,7 +87,13 @@ const CrearConsultorio = (props) => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (nombre === "" || telefono === "" || ubicacion === "") {
+    if (
+      nombre === "" ||
+      telefono === "" ||
+      ubicacion === "" ||
+      latitud === "" ||
+      longitud === ""
+    ) {
       setFormError(true);
       return;
     }
@@ -92,6 +105,8 @@ const CrearConsultorio = (props) => {
     setTelefono("");
     setUbicacion("");
     setHorarios([]);
+    setLatitud(0);
+    setLongitud(0);
   };
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -131,6 +146,36 @@ const CrearConsultorio = (props) => {
               rows={4}
             />
           </Grid>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              marginLeft: 2,
+              marginRight: 2,
+            }}
+          >
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <Grid item xs={6} sx={{ marginLeft: 4, marginRight: 4 }}>
+                <TextField
+                  className="latitude-container"
+                  label="Latitude"
+                  autoComplete="off"
+                  value={latitud}
+                  onChange={handleLatitudChange}
+                />
+              </Grid>
+              <Grid item xs={6} sx={{ marginLeft: 2, marginRight: 2 }}>
+                <TextField
+                  className="longitude-container"
+                  label="Longitude"
+                  autoComplete="off"
+                  value={longitud}
+                  onChange={handleLogitudChange}
+                />
+              </Grid>
+            </div>
+          </div>
+
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <Autocomplete
               multiple

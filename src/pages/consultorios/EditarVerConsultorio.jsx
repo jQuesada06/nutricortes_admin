@@ -22,6 +22,8 @@ const EditarConsultorio = (props) => {
   const [formError, setFormError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
   const [horarios, setHorarios] = useState([]);
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
 
   const options = ["Mañana", "Tarde"];
 
@@ -31,6 +33,8 @@ const EditarConsultorio = (props) => {
       setTelefono(object.object.Telefono);
       setUbicacion(object.object.Ubicacion);
       setHorarios(object.object.Horarios || []);
+      setLatitude(object.object.Coordenadas.Latitud);
+      setLongitude(object.object.Coordenadas.Longitud);
     }
   }, [object]);
 
@@ -53,6 +57,13 @@ const EditarConsultorio = (props) => {
 
     setTelefono(input);
     setPhoneError(hasError);
+  };
+
+  const handleLatChange = (event) => {
+    setLatitude(event.target.value);
+  };
+  const handleLonChange = (event) => {
+    setLongitude(event.target.value);
   };
 
   const handleUpdate = async () => {
@@ -98,7 +109,7 @@ const EditarConsultorio = (props) => {
       </DialogContent>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               label="Nombre"
               className="nombre-container"
@@ -107,7 +118,7 @@ const EditarConsultorio = (props) => {
               disabled={flagView}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               label="Teléfono"
               className="telefono-container"
@@ -116,7 +127,7 @@ const EditarConsultorio = (props) => {
               disabled={flagView}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               label="Ubicación"
               className="ubicacion-container"
@@ -127,8 +138,38 @@ const EditarConsultorio = (props) => {
               rows={4}
             />
           </Grid>
-
-          <Grid item xs={12}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              marginLeft: 2,
+              marginRight: 2,
+            }}
+          >
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <Grid item xs={6} sx={{ marginLeft: 4, marginRight: 4 }}>
+                <TextField
+                  className="latitude-container"
+                  label="Latitude"
+                  autoComplete="off"
+                  value={latitude}
+                  onChange={handleLatChange}
+                  disabled={flagView}
+                />
+              </Grid>
+              <Grid item xs={6} sx={{ marginLeft: 2, marginRight: 2 }}>
+                <TextField
+                  className="longitude-container"
+                  label="Longitude"
+                  autoComplete="off"
+                  value={longitude}
+                  onChange={handleLonChange}
+                  disabled={flagView}
+                />
+              </Grid>
+            </div>
+          </div>
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             {flagView ? (
               <TextField
                 className="horarios-container"
