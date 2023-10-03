@@ -125,13 +125,17 @@ const TablaConsultorios = () => {
   }, []);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      <Typography variant="h4" gutterBottom style={{ textAlign: "center" }}>
-        Consultorios
-      </Typography>
-      <div style={{ height: 400, width: "100%" }}>
+    <>
+      <div style={{ height: 400, width: "80%" }}>
+        <Typography variant="h4" gutterBottom style={{ textAlign: "center" }}>
+          Consultorios
+        </Typography>
         <div
-          style={{ display: 'flex', justifyContent: 'space-between', marginBottom: "3%" }}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginBottom: "3%",
+          }}
         >
           <SearchBar onSearch={(searchTerm) => setSearchQuery(searchTerm)} />
           <Button
@@ -144,16 +148,13 @@ const TablaConsultorios = () => {
             Agregar
           </Button>
         </div>
-        <div style={{ height: 500, width: "100%" }}>
-          <DataGrid
-            rows={filteredRows}
-            columns={columns}
-            autoHeight
-            autoWidth
-            disableRowSelectionOnClick
-            disableColumnMenu={true}
-          />
-        </div>
+        <DataGrid
+          rows={filteredRows}
+          columns={columns}
+          autoPageSize
+          disableRowSelectionOnClick
+          disableColumnMenu={true}
+        />
       </div>
       <EditarVerConsultorio
         open={openEditView}
@@ -173,7 +174,7 @@ const TablaConsultorios = () => {
         onClose={handleClose}
         onCreate={handleCreate}
       />
-    </div>
+    </>
   );
 };
 
