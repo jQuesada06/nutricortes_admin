@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { TextField, IconButton, Button } from "@mui/material";
+import { TextField, IconButton, Button, Typography } from "@mui/material";
 import { Visibility, Delete, Edit } from "@mui/icons-material";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
+import SearchBar from "./SearchBar";
 import CrearReto from "./CrearReto";
 import EditarVerReto from "./EditarVerReto";
 import EliminarReto from "./EliminarReto";
@@ -132,13 +133,15 @@ const TablaReto = () => {
 
   return (
     <>
-      <div style={{ height: 400, width: "95%" }}>
-        <div style={{ textAlign: "right" }}>
-          <TextField
-            label="Buscar"
-            className="buscar"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+      <div>
+        <div style={{  display: 'flex',justifyContent: 'center',  }}>
+          <Typography variant="h4">
+            Reto
+          </Typography>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', }}>
+          <SearchBar
+            onSearch={(searchTerm) => setSearchQuery(searchTerm)}
           />
           <Button
             variant="contained"
@@ -147,10 +150,10 @@ const TablaReto = () => {
             }}
             color="primary"
           >
-            Agregar Reto
+            Agregar
           </Button>
         </div>
-        <DataGrid
+        <DataGrid 
           rows={filteredRows}
           columns={columns}
           autoPageSize
