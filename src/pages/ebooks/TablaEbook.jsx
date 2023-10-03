@@ -6,6 +6,7 @@ import { collection, getDocs } from "@firebase/firestore";
 import CrearEbook from "./CrearEbook";
 import EditarVerPlan from "./EditarVerEbook";
 import EliminarEbook from "./EliminarEbook";
+import SearchBar from "../faqs/SearchBar";
 import { db } from "../../firebase/config";
 import './Ebook.css'
 
@@ -22,7 +23,6 @@ const TablaEbooks = () => {
   const columns = [
     { field: "Nombre", headerName: "Nombre", width: 250 },
     { field: "Descripcion", headerName: "Descripcion", width: 150 },
-    { field: "Imagen", headerName: "Imagen", width: 500 },
     { field: "Precio", headerName: "Precio", width: 500 },
     {
       field: "actions",
@@ -128,11 +128,8 @@ const TablaEbooks = () => {
     <>
       <div style={{ height: 400, width: "95%" }}>
         <div style={{ textAlign: "right" }}>
-          <TextField
-            label="Buscar"
-            className="buscar"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+        <SearchBar
+            onSearch={(searchTerm) => setSearchQuery(searchTerm)}
           />
           <Button
             variant="contained"

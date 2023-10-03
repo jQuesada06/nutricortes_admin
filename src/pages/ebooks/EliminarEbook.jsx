@@ -8,16 +8,27 @@ import {
 } from "@mui/material";
 import { doc, deleteDoc } from "@firebase/firestore";
 import { toast } from "react-toastify";
-import { db } from "../../firebase/config";
+import { db, storage } from "../../firebase/config";
+import { ref, deleteObject } from "firebase/storage";
 
 const EliminarEbook = (props) => {
   const { onClose, open, object, onRemove } = props;
 
   const handleClose = () => onClose();
 
+  const deleteImage = async () => {
+    const ebooksRef = ref(storage, object.object.Imagen)
+    deleteObject(ebooksRef).then(() => {
+      // File deleted successfully
+    }).catch((error) => {
+      console.log(error)
+    });
+  };
+
   const handleDelete = async () => {
     const docRef = doc(db, "Ebooks", object.object.id);
     try {
+      await deleteImage();
       await deleteDoc(docRef);
       toast.success("eBook Eliminado", { autoClose: 3000 });
       onRemove(object.object.id);

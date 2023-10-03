@@ -6,35 +6,78 @@ import {
   TextField,
   Button,
   DialogActions,
-  Grid
+  Grid,
+  Card,
+  CardContent,
+  CardMedia,
+  Typography
 } from "@mui/material";
+import { getDownloadURL, ref , uploadBytes} from "firebase/storage";
 import { collection, addDoc } from "@firebase/firestore";
 import { toast } from "react-toastify";
 import "./Ebook.css";
-import { db } from "../../firebase/config";
+import { db, storage , storageEbooksRef} from "../../firebase/config";
 
 const CrearEbook = (props) => {
   const { onClose, open, onCreate } = props;
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
-  const [imagen, setImagen] = useState("sssss");
+
   const [precio, setPrecio] = useState("");
   const [formError, setFormError] = useState(false);
+  const [imageURL, setImageURL] = useState(null);
+  const [image, setImage] = useState(null);
+  
+
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    setImage(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImageURL(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleClose = () => onClose();
   const handleNameChange = (event) => setNombre(event.target.value);
   const handleDescriptionChange = (event) => setDescripcion(event.target.value);
-  const handleImagenChange = (event) => setImagen(event.target.value);
   const handlePrecioChange = (event) => setPrecio(event.target.value);
-  
+
+
+  const uploadImage = async () => {
+    if (!image) {
+      alert('Selecciona un archivo primero.');
+      return;
+    }
+    const timestamp = new Date().getTime(); // Obtiene la marca de tiempo actual en milisegundos
+    const imageName = `${timestamp}_${image.name}`;
+    const ebooksRef = ref(storage,`ebooks/${imageName}`)
+    try {
+      await uploadBytes(ebooksRef, image);
+
+      // Obtiene la URL de descarga del archivo subido
+      const downloadURL = await getDownloadURL(ebooksRef);
+      return downloadURL;
+    } catch (error) {
+      console.log(error)
+      alert('Error al cargar la imagen.');
+    }
+  };
 
   const handleCreate = async () => {
     const collectionRef = collection(db, "Ebooks");
+
+    const url = await uploadImage();
+   
     try {
       const plan = {
         Nombre: nombre,
         Descripcion: descripcion,
-        Imagen: imagen,
+        Imagen: url,
         Precio: precio
       };
       const docRef = await addDoc(collectionRef, plan);
@@ -53,7 +96,7 @@ const CrearEbook = (props) => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (nombre === "" || descripcion === "" || imagen === "" || precio === "" ) {
+    if (nombre === "" || descripcion === "" || precio === "") {
       setFormError(true);
       return;
     }
@@ -63,8 +106,9 @@ const CrearEbook = (props) => {
   const clearFields = () => {
     setNombre("");
     setDescripcion("");
-    setImagen("");
     setPrecio("");
+    setImage(null)
+    setImageURL(null)
   };
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -72,7 +116,7 @@ const CrearEbook = (props) => {
       <DialogContent>Favor llenar todos los campos.</DialogContent>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={12} sx={{marginTop: 2, marginLeft: 2, marginRight: 2}}>
+          <Grid item xs={12} sx={{ marginTop: 2, marginLeft: 2, marginRight: 2 }}>
             <TextField
               className="nombre-container"
               label="Nombre"
@@ -81,7 +125,7 @@ const CrearEbook = (props) => {
               onChange={handleNameChange}
             />
           </Grid>
-          <Grid item xs={12} sx={{marginLeft: 2, marginRight: 2}}>
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               className="descripcion-container"
               label="Descripcion"
@@ -90,16 +134,33 @@ const CrearEbook = (props) => {
               onChange={handleDescriptionChange}
             />
           </Grid>
-          <Grid item xs={12} sx={{marginLeft: 2, marginRight: 2}}>
-            <TextField
-              className="imagen-container"
-              label="Imagen"
-              autoComplete="off"
-              value={imagen}
-              onChange={handleImagenChange}
-            />
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
+            <Card>
+              <CardContent >
+                <input
+                  type="file"
+                  accept="image/*"
+                  id="image-upload"
+                  style={{ display: 'none' }}
+                  onChange={handleImageUpload}
+                />
+                <label htmlFor="image-upload">
+                  <Button variant="outlined" component="span">
+                    Subir imagen
+                  </Button>
+                </label>
+                {imageURL && (
+                  <CardMedia sx={{ marginTop: "20px" }}
+                    component="img"
+                    alt="Imagen seleccionada"
+                    height="auto"
+                    image={imageURL}
+                  />
+                )}
+              </CardContent>
+            </Card>
           </Grid>
-          <Grid item xs={12} sx={{marginLeft: 2, marginRight: 2, marginBottom: 2}}>
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2, marginBottom: 2 }}>
             <TextField
               className="precio-container"
               label="Precio"
@@ -109,13 +170,13 @@ const CrearEbook = (props) => {
             />
           </Grid>
           {formError && (
-            <Grid item xs={12} justifyContent="flex-end" sx={{marginLeft: 2, marginRight: 2}}>
+            <Grid item xs={12} justifyContent="flex-end" sx={{ marginLeft: 2, marginRight: 2 }}>
               <p style={{ color: "red" }}>Llene todos los Campos.</p>
             </Grid>
           )}
           <Grid item xs={12} justifyContent="flex-end">
             <DialogActions>
-              <Button onClick={(() => {handleClose() ; clearFields()})}>Cerrar</Button>
+              <Button onClick={(() => { handleClose(); clearFields() })}>Cerrar</Button>
               <Button type="submit" variant="contained" color="primary">
                 Guardar
               </Button>
