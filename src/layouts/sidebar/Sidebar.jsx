@@ -93,6 +93,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const Sidebar = () => {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+    const [activeItem, setActiveItem] = React.useState(null);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -141,13 +142,14 @@ const Sidebar = () => {
                 <Divider />
                 <List>
                     {menuItems.items.map((element, index) => (
-                        <ListItem key={index} disablePadding sx={{ display: 'block' }}>
+                        <ListItem key={index} disablePadding sx={{ display: 'block', backgroundColor:  activeItem === index ? 'primary.main' : 'transparent', }} onClick={() => setActiveItem(index)} >
                             <Link to={element.url} className='sidebar-link'>
                                 <ListItemButton
                                     sx={{
                                         minHeight: 48,
                                         justifyContent: open ? 'initial' : 'center',
                                         px: 2.5,
+                                        
                                     }}
                                 >
                                     <ListItemIcon
@@ -155,6 +157,7 @@ const Sidebar = () => {
                                             minWidth: 0,
                                             mr: open ? 3 : 'auto',
                                             justifyContent: 'center',
+                                            color: activeItem === index ? 'white' : 'gray',
                                         }}
                                     >
                                         <span className='material-symbols-outlined'>
@@ -162,7 +165,7 @@ const Sidebar = () => {
                                         </span>
                                     </ListItemIcon>
 
-                                    <ListItemText primary={element.tittle} sx={{ opacity: open ? 1 : 0 }} />
+                                    <ListItemText primary={element.tittle} sx={{ opacity: open ? 1 : 0 , color: activeItem === index ? 'white' : 'gray'}} />
 
                                 </ListItemButton>
                             </Link>
