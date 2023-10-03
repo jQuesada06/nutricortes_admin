@@ -18,6 +18,7 @@ import "./Carrito.css"
 import { db } from '../../firebase/config';
 import { useState, useEffect } from 'react';
 import { collection, getDocs, orderBy, query } from "@firebase/firestore";
+import { TablePagination } from '@mui/material';
 
 
 function Row(props) {
@@ -79,6 +80,12 @@ function Row(props) {
 
 export default function TablaCarrito() {
 
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(3);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
   
   const [data, setData] = useState([]);
   const [dataFiltered, setDataFiltered] = useState([]);
@@ -124,12 +131,19 @@ export default function TablaCarrito() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {dataFiltered.map((row) => (
+          {dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
             <Row key={row.id} row={row} />
           ))}
         </TableBody>
       </Table>
     </TableContainer>
+    <TablePagination
+        component="div"
+        count={dataFiltered.length}
+        page={page}
+        onPageChange={handleChangePage}
+        rowsPerPage={rowsPerPage}
+      />
     </div>
   );
 }
