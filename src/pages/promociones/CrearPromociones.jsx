@@ -59,35 +59,35 @@ const CrearPromociones = (props) => {
   };
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Agregar nueva promocion</DialogTitle>
-      <DialogContent>Favor llenar todos los campos.</DialogContent>
+      <DialogTitle style={{ textAlign: "center" }}>Agregar nueva promoción</DialogTitle>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={12} container justifyContent="center" alignItems="center" mb={2}>
             <TextField
-              className="titulo-container"
+              className="modal-container"
               label="Titulo"
               autoComplete="off"
               value={titulo}
               onChange={handleTituloChange}
               multiline
-              rows={4}
+              rows={2}
             />
           </Grid>
-          <Grid item xs={12}>
+          
+          <Grid item xs={12} container justifyContent="center" alignItems="center" mb={2}>
             <TextField
-              className="descripcion-container"
+              className="modal-container"
               label="Descripción"
               autoComplete="off"
               value={descripcion}
               onChange={handleDescripcionChange}
               multiline
-              rows={4}
+              rows={6}
             />
           </Grid>
           {formError && (
             <Grid item xs={12} justifyContent="flex-end">
-              <p style={{ color: "red" }}>Llene todos los formularios.</p>
+              <p style={{ color: "red", textAlign: "center"}}>Llene todos los formularios</p>
             </Grid>
           )}
           <Grid item xs={12} justifyContent="flex-end">

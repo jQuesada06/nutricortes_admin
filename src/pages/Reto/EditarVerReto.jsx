@@ -204,7 +204,7 @@ const EditarReto = (props) => {
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>
+      <DialogTitle style={{ textAlign: "center" }}>
         {flagView ? "Ver Reto" : "Actualizar Reto"}
       </DialogTitle>
       <DialogContent>
@@ -332,7 +332,7 @@ const EditarReto = (props) => {
           ))}
           {!flagView && formError && (
             <Grid item xs={12} justifyContent="flex-end">
-              <p style={{ color: "red" }}>Llene todos los formularios.</p>
+              <p style={{ color: "red", textAlign: "center" }}>Llene todos los formularios</p>
             </Grid>
           )}
           <Grid item xs={12} justifyContent="flex-end">

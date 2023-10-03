@@ -60,41 +60,36 @@ const EditarPromociones = (props) => {
   };
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>
-        {flagView ? "Ver promocion" : "Actualizar promocion"}
+      <DialogTitle style={{textAlign: "center"}} >
+        {flagView ? "Ver promoción" : "Actualizar promoción"}
       </DialogTitle>
-      <DialogContent>
-        {flagView
-          ? "Detalle de la promocion"
-          : "Edite los datos de la promocion existente."}
-      </DialogContent>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={12} container justifyContent="center" alignItems="center" mb={2}>
             <TextField
               label="Titulo"
-              className="Titulo-container"
+              className="modal-container"
               value={titulo}
               onChange={handleTituloChange}
               disabled={flagView}
               multiline
-              rows={4}
+              rows={2}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} container justifyContent="center" alignItems="center" mb={2}>
             <TextField
               label="Descripcion"
-              className="Descripcion-container"
+              className="modal-container"
               value={descripcion}
               onChange={handleDescripcionChange}
               disabled={flagView}
               multiline
-              rows={4}
+              rows={6}
             />
           </Grid>
           {!flagView && formError && (
             <Grid item xs={12} justifyContent="flex-end">
-              <p style={{ color: "red" }}>Llene todos los formularios.</p>
+              <p style={{ color: "red", textAlign: "center" }}>Llene todos los formularios</p>
             </Grid>
           )}
           <Grid item xs={12} justifyContent="flex-end">

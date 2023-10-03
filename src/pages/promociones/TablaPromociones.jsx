@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { TextField, IconButton, Button } from "@mui/material";
+import { TextField, IconButton, Button, Typography } from "@mui/material";
 import { Visibility, Delete, Edit } from "@mui/icons-material";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 
+import SearchBar from "./SearchBar";
 import CrearPromociones from "./CrearPromociones";
 import EditarVerPromociones from "./EditarVerPromociones";
 import EliminarPromociones from "./EliminarPromociones";
@@ -19,25 +20,26 @@ const TablaPromociones = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
 
   const columns = [
-    { field: "Titulo", headerName: "Titulo", width: 200 },
-    { field: "Descripcion", headerName: "Descripcion", width: 200 },
+    { field: "Titulo", headerName: "Titulo", width: 300 },
+    { field: "Descripcion", headerName: "Descripcion", width: 500 },
     {
       field: "actions",
       headerName: "Acciones",
-      width: 200,
+      width: 150,
       renderCell: (params) => (
         <>
-          <IconButton
-            color="error"
-            aria-label="delete"
+        <IconButton
+            color="primary"
+            aria-label="view"
             variant="contained"
             size="small"
             onClick={() => {
-              setOpenDelete(true);
+              setOpenEditView(true);
+              setFlagView(true);
               setObject({ object: params.row });
             }}
           >
-            <Delete />
+            <Visibility />
           </IconButton>
           <IconButton
             color="success"
@@ -52,17 +54,16 @@ const TablaPromociones = () => {
             <Edit />
           </IconButton>
           <IconButton
-            color="primary"
-            aria-label="view"
+            color="error"
+            aria-label="delete"
             variant="contained"
             size="small"
             onClick={() => {
-              setOpenEditView(true);
-              setFlagView(true);
+              setOpenDelete(true);
               setObject({ object: params.row });
             }}
           >
-            <Visibility />
+            <Delete />
           </IconButton>
         </>
       ),
@@ -124,13 +125,15 @@ const TablaPromociones = () => {
 
   return (
     <>
-      <div style={{ height: 400, width: "95%" }}>
-        <div style={{ textAlign: "right" }}>
-          <TextField
-            label="Buscar"
-            className="buscar"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+      <div style={{ height: 371, width: "80%"  }}>
+        {/* Agrega el título grande */}
+        <Typography variant="h4" gutterBottom style={{ textAlign: "center" }}>
+          Promociones
+        </Typography>
+        {/* Envuelve el botón "Agregar" y la barra de búsqueda */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: "3%" }}>
+          <SearchBar
+            onSearch={(searchTerm) => setSearchQuery(searchTerm)}
           />
           <Button
             variant="contained"
@@ -139,7 +142,7 @@ const TablaPromociones = () => {
             }}
             color="primary"
           >
-            Agregar Promocion
+            Agregar
           </Button>
         </div>
         <DataGrid

@@ -14,3 +14,8 @@
 .buscar {
   width: 50%;
 }
+
+.modal-container {
+  width: 80%;
+  margin-left: 10%;
+}

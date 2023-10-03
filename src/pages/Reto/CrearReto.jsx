@@ -174,7 +174,7 @@ const CrearReto = (props) => {
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Crear Nuevo Reto</DialogTitle>
+      <DialogTitle style={{ textAlign: "center" }}>Crear Nuevo Reto</DialogTitle>
       <DialogContentText>Complete los datos del nuevo reto:</DialogContentText>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
@@ -293,7 +293,7 @@ const CrearReto = (props) => {
           </Grid>
           {formError && (
             <Grid item xs={12}>
-              <p style={{ color: "red" }}>Llene todos los formularios.</p>
+              <p style={{ color: "red", textAlign: "center" }}>Llene todos los formularios</p>
             </Grid>
           )}
           <Grid item xs={12}>

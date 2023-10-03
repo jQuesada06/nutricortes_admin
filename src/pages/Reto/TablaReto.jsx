@@ -19,12 +19,11 @@ const TablaReto = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
 
   const columns = [
-    { field: "descripcion", headerName: "Descripción del reto", width: 200 },
-    { field: "fechaInicial", headerName: "Fecha Inicial", width: 200 },
-    { field: "fechaFinal", headerName: "Fecha Final", width: 200 },
-    { field: "fechaProximoReto", headerName: "Fecha del proximo reto", width: 200 },
+    
+    { field: "nombre", headerName: "nombre", width: 300 },
+    { field: "fechaInicial", headerName: "Fecha Inicial", width: 250 },
+    { field: "fechaFinal", headerName: "Fecha Final", width: 250 },
     //{ field: "imagen", headerName: "imagen", width: 150 },
-    { field: "nombre", headerName: "nombre", width: 200 },
     //{ field: "patrocinadores", headerName: "patrocinadores", width: 500 }, //Faltan los datos (imagen, link, nombre), porque es una lista
 
     //{ field: "plus", headerName: "plus", width: 500 },
@@ -32,20 +31,21 @@ const TablaReto = () => {
     {
       field: "actions",
       headerName: "Acciones",
-      width: 200,
+      width: 150,
       renderCell: (params) => (
         <>
           <IconButton
-            color="error"
-            aria-label="delete"
+            color="primary"
+            aria-label="view"
             variant="contained"
             size="small"
             onClick={() => {
-              setOpenDelete(true);
+              setOpenEditView(true);
+              setFlagView(true);
               setObject({ object: params.row });
             }}
           >
-            <Delete />
+            <Visibility />
           </IconButton>
           <IconButton
             color="success"
@@ -60,17 +60,16 @@ const TablaReto = () => {
             <Edit />
           </IconButton>
           <IconButton
-            color="primary"
-            aria-label="view"
+            color="error"
+            aria-label="delete"
             variant="contained"
             size="small"
             onClick={() => {
-              setOpenEditView(true);
-              setFlagView(true);
+              setOpenDelete(true);
               setObject({ object: params.row });
             }}
           >
-            <Visibility />
+            <Delete />
           </IconButton>
         </>
       ),
@@ -133,13 +132,13 @@ const TablaReto = () => {
 
   return (
     <>
-      <div>
-        <div style={{  display: 'flex',justifyContent: 'center',  }}>
-          <Typography variant="h4">
-            Reto
-          </Typography>
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', }}>
+      <div style={{ height: 371, width: "80%"  }}>
+        {/* Agrega el título grande */}
+        <Typography variant="h4" gutterBottom style={{ textAlign: "center" }}>
+          Reto
+        </Typography>
+        {/* Envuelve el botón "Agregar" y la barra de búsqueda */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: "3%" }}>
           <SearchBar
             onSearch={(searchTerm) => setSearchQuery(searchTerm)}
           />
