@@ -17,7 +17,7 @@ import SearchBar from '../faqs/SearchBar';
 import "./Carrito.css"
 import { db } from '../../firebase/config';
 import { useState, useEffect } from 'react';
-import { collection, getDocs, orderBy } from "@firebase/firestore";
+import { collection, getDocs, orderBy, query } from "@firebase/firestore";
 
 
 function Row(props) {
@@ -95,7 +95,9 @@ export default function TablaCarrito() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const querySnapshot = await getDocs(collection(db, "Carrito"), orderBy("fecha", "desc"));
+      const carritoRef = collection(db, 'Carrito');
+      const queryOrdenada = query(carritoRef, orderBy('fecha', 'desc'));
+      const querySnapshot = await getDocs(queryOrdenada);
       const data = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
