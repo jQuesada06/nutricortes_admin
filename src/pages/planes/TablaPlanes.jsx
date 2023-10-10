@@ -21,9 +21,9 @@ const TablaPlanes = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
 
   const columns = [
-    { field: "Nombre", headerName: "Nombre", width: 250 },
-    { field: "Modalidad", headerName: "Modalidad", width: 200 },
-    { field: "Detalles", headerName: "Detalles", width: 350 },
+    { field: "Nombre", headerName: "Nombre", width: 150 },
+    { field: "Modalidad", headerName: "Modalidad", width: 150 },
+    { field: "Detalles", headerName: "Detalles", width: 430 },
     { field: "Precio", headerName: "Precio", width: 150 },
     {
       field: "actions",
