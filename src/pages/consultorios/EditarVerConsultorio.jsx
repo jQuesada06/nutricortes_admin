@@ -22,8 +22,8 @@ const EditarConsultorio = (props) => {
   const [formError, setFormError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
   const [horarios, setHorarios] = useState([]);
-  const [latitude, setLatitude] = useState(0);
-  const [longitude, setLongitude] = useState(0);
+  const [latitud, setLatitude] = useState(0);
+  const [longitud, setLongitude] = useState(0);
 
   const options = ["Mañana", "Tarde"];
 
@@ -75,6 +75,10 @@ const EditarConsultorio = (props) => {
         Telefono: telefono,
         Ubicacion: ubicacion,
         Horarios: horarios,
+        Coordenadas: {
+          Latitud: latitud,
+          Longitud: longitud,
+        },
       };
       await setDoc(collectionRef, consultorio);
       toast.success("Actualizado", { autoClose: 3000 });
@@ -152,7 +156,7 @@ const EditarConsultorio = (props) => {
                   className="latitude-container"
                   label="Latitude"
                   autoComplete="off"
-                  value={latitude}
+                  value={latitud}
                   onChange={handleLatChange}
                   disabled={flagView}
                 />
@@ -162,7 +166,7 @@ const EditarConsultorio = (props) => {
                   className="longitude-container"
                   label="Longitude"
                   autoComplete="off"
-                  value={longitude}
+                  value={longitud}
                   onChange={handleLonChange}
                   disabled={flagView}
                 />
