@@ -97,14 +97,9 @@ const EditarPlan = (props) => {
   };
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>
+      <DialogTitle style={{ textAlign: "center" }}>
         {flagView ? "Ver Plan" : "Actualizar Plan"}
       </DialogTitle>
-      <DialogContent style={{ marginBottom: "20px",  overflow: "hidden", overflowY: "hidden"}}>
-        {flagView
-          ? "Detallade del Plan"
-          : "Edite a los datos del Plan existente."}
-      </DialogContent>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
@@ -171,7 +166,7 @@ const EditarPlan = (props) => {
                 ))}
               </List> :
 
-              (<Typography sx={{ marginLeft: 2, marginRight: 2 }}>*Agrega algun detalle</Typography>)
+              (<Typography sx={{ marginLeft: 2, marginRight: 2 }}>*Agrega algún detalle</Typography>)
             }
           </Grid>
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
@@ -186,7 +181,7 @@ const EditarPlan = (props) => {
           </Grid>
           {!flagView && formError && (
             <Grid item xs={12} justifyContent="flex-end">
-              <p style={{ color: "red" }}>Llene todos los formularios.</p>
+              <p style={{ color: "red",textAlign: "center"  }}>Llene todos los formularios</p>
             </Grid>
           )}
           <Grid item xs={12} justifyContent="flex-end">

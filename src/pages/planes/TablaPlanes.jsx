@@ -22,8 +22,8 @@ const TablaPlanes = () => {
 
   const columns = [
     { field: "Nombre", headerName: "Nombre", width: 250 },
-    { field: "Modalidad", headerName: "Modalidad", width: 120 },
-    { field: "Detalles", headerName: "Detalles", width: 300 },
+    { field: "Modalidad", headerName: "Modalidad", width: 200 },
+    { field: "Detalles", headerName: "Detalles", width: 350 },
     { field: "Precio", headerName: "Precio", width: 150 },
     {
       field: "actions",
@@ -31,17 +31,18 @@ const TablaPlanes = () => {
       width: 150,
       renderCell: (params) => (
         <>
-          <IconButton
-            color="error"
-            aria-label="delete"
+                    <IconButton
+            color="primary"
+            aria-label="view"
             variant="contained"
             size="small"
             onClick={() => {
-              setOpenDelete(true);
+              setOpenEditView(true);
+              setFlagView(true);
               setObject({ object: params.row });
             }}
           >
-            <Delete />
+            <Visibility />
           </IconButton>
           <IconButton
             color="success"
@@ -56,17 +57,16 @@ const TablaPlanes = () => {
             <Edit />
           </IconButton>
           <IconButton
-            color="primary"
-            aria-label="view"
+            color="error"
+            aria-label="delete"
             variant="contained"
             size="small"
             onClick={() => {
-              setOpenEditView(true);
-              setFlagView(true);
+              setOpenDelete(true);
               setObject({ object: params.row });
             }}
           >
-            <Visibility />
+            <Delete />
           </IconButton>
         </>
       ),
@@ -127,7 +127,7 @@ const TablaPlanes = () => {
 
   return (
     <>
-      <div style={{ height: 400, width: "80%" }}>
+      <div style={{ height: 371, width: "80%" }}>
         <Typography variant="h4" gutterBottom style={{ textAlign: "center" }}>
           Planes
         </Typography>
@@ -142,7 +142,7 @@ const TablaPlanes = () => {
             }}
             color="primary"
           >
-            Agregar Plan
+            Agregar
           </Button>
         </div>
         <DataGrid

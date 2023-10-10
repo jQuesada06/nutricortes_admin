@@ -112,238 +112,230 @@ function VerBiografia() {
 
  return( 
   <Container>
-  <Grid container spacing={2}>
-    <Grid item xs={6}>
-      <Paper style={{ padding: '16px' }}>
-        <Typography variant="h6">Nombre</Typography>
-        {editMode.nombre ? (
-          <TextField
-            fullWidth
-            value={biografia.nombre}
-            onChange={(e) => handleInputChange('nombre', e)}
-          />
-        ) : (
-          <Typography>{biografia.nombre}</Typography>
-        )}
-        {editMode.nombre ? (
-          <>
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={() => handleGuardar('nombre')}
-              style={{ marginTop: '16px', marginLeft: '8px' }}
-            >
-              Guardar
-            </Button>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => setEditMode({ ...editMode, nombre: false })}
-              style={{ marginTop: '16px', marginLeft: '8px' }}
-            >
-              Cancelar
-            </Button>
-          </>
-        ) : (
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={() => handleModificar('nombre')}
-            style={{ marginTop: '16px' }}
-          >
-            Modificar
-          </Button>
-        )}
-      </Paper>
-    </Grid>
-    <Grid item xs={6}>
-      <Paper style={{ padding: '16px' }}>
-        <Typography variant="h6">Código</Typography>
-        {editMode.codigo ? (
-          <TextField
-            fullWidth
-            value={biografia.codigo}
-            onChange={(e) => handleInputChange('codigo', e)}
-          />
-        ) : (
-          <Typography>{biografia.codigo}</Typography>
-        )}
-        {editMode.codigo ? (
-          <>
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={() => handleGuardar('codigo')}
-              style={{ marginTop: '16px', marginLeft: '8px' }}
-            >
-              Guardar
-            </Button>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => setEditMode({ ...editMode, codigo: false })}
-              style={{ marginTop: '16px', marginLeft: '8px' }}
-            >
-              Cancelar
-            </Button>
-          </>
-        ) : (
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={() => handleModificar('codigo')}
-            style={{ marginTop: '16px' }}
-          >
-            Modificar
-          </Button>
-        )}
-      </Paper>
-    </Grid>
-    <Grid item xs={12}>
-      <Paper style={{ padding: '16px', display: 'flex' }}>
-        <div style={{ width: '70%' }}>
-          <Typography variant="h6">Descripción</Typography>
-          {editMode.descripcion ? (
+    <Grid container spacing={2} marginTop={'600px'}>
+      <Grid item xs={6}>
+        <Paper style={{ padding: '16px' }}>
+          <Typography variant="h6">Nombre</Typography>
+          {editMode.nombre ? (
             <TextField
               fullWidth
-              multiline
-              rows={4}
-              value={biografia.descripcion}
-              onChange={(e) => handleInputChange('descripcion', e)}
+              value={biografia.nombre}
+              onChange={(e) => handleInputChange('nombre', e)}
             />
           ) : (
-            <Typography>{biografia.descripcion}</Typography>
+            <Typography>{biografia.nombre}</Typography>
           )}
-          {editMode.descripcion ? (
+          {editMode.nombre ? (
             <>
               <Button
                 variant="outlined"
-                color="secondary"
-                onClick={() => handleGuardar('descripcion')}
-                style={{ marginTop: '16px', marginLeft: '8px' }}
-              >
-                Guardar
-              </Button>
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={() =>
-                  setEditMode({ ...editMode, descripcion: false })
-                }
+                onClick={() => setEditMode({ ...editMode, nombre: false })}
                 style={{ marginTop: '16px', marginLeft: '8px' }}
               >
                 Cancelar
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => handleGuardar('nombre')}
+                style={{ marginTop: '16px', marginLeft: '8px' }}
+              >
+                Guardar
               </Button>
             </>
           ) : (
             <Button
               variant="outlined"
-              color="primary"
-              onClick={() => handleModificar('descripcion')}
+              onClick={() => handleModificar('nombre')}
               style={{ marginTop: '16px' }}
             >
               Modificar
             </Button>
           )}
-        </div>
-        <div style={{ width: '30%', marginLeft: '16px' }}>
-          <Typography variant="h6">Imagen</Typography>
-          {editMode.imagen ? (
+        </Paper>
+      </Grid>
+      <Grid item xs={6}>
+        <Paper style={{ padding: '16px' }}>
+          <Typography variant="h6">Código</Typography>
+          {editMode.codigo ? (
+            <TextField
+              fullWidth
+              value={biografia.codigo}
+              onChange={(e) => handleInputChange('codigo', e)}
+            />
+          ) : (
+            <Typography>{biografia.codigo}</Typography>
+          )}
+          {editMode.codigo ? (
             <>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                style={{ display: 'none' }}
-                id="image-input"
-              />
-              <label htmlFor="image-input">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  component="span"
-                >
-                  Seleccionar
-                </Button>
-              </label>
-              <div
-                style={{
-                  width: '100%',
-                  paddingBottom: '100%',
-                  position: 'relative',
-                }}
-              >
-                <img
-                  src={biografia.imagen}
-                  alt="Imagen de la Biografía"
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                  }}
-                />
-              </div>
               <Button
                 variant="outlined"
-                color="primary"
-                onClick={handleCancelarImagen}
+                onClick={() => setEditMode({ ...editMode, codigo: false })}
                 style={{ marginTop: '16px', marginLeft: '8px' }}
               >
                 Cancelar
               </Button>
               <Button
-                variant="outlined"
-                color="secondary"
-                onClick={() => handleGuardar('imagen')}
+                variant="contained"
+                onClick={() => handleGuardar('codigo')}
                 style={{ marginTop: '16px', marginLeft: '8px' }}
               >
                 Guardar
               </Button>
             </>
           ) : (
-            <>
-              <div
-                style={{
-                  width: '100%',
-                  paddingBottom: '100%',
-                  position: 'relative',
-                }}
-              >
-                <img
-                  src={biografia.imagen}
-                  alt="Imagen de la Biografía"
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                  }}
-                />
-              </div>
+            <Button
+              variant="outlined"
+              onClick={() => handleModificar('codigo')}
+              style={{ marginTop: '16px' }}
+            >
+              Modificar
+            </Button>
+          )}
+        </Paper>
+      </Grid>
+      <Grid item xs={12}>
+        <Paper style={{ padding: '16px', display: 'flex' }}>
+          <div style={{ width: '70%' }}>
+            <Typography variant="h6">Descripción</Typography>
+            {editMode.descripcion ? (
+              <TextField
+                fullWidth
+                multiline
+                rows={4}
+                value={biografia.descripcion}
+                onChange={(e) => handleInputChange('descripcion', e)}
+              />
+            ) : (
+              <Typography>{biografia.descripcion}</Typography>
+            )}
+            {editMode.descripcion ? (
+              <>
+                <Button 
+                  variant="outlined"
+                  onClick={() =>
+                    setEditMode({ ...editMode, descripcion: false })
+                  }
+                  style={{ marginTop: '16px', marginLeft: '8px',  }}
+                >
+                  Cancelar
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={() => handleGuardar('descripcion')}
+                  style={{ marginTop: '16px', marginLeft: '8px' }}
+                >
+                  Guardar
+                </Button>
+              </>
+            ) : (
               <Button
                 variant="outlined"
                 color="primary"
-                onClick={() => handleModificar('imagen')}
+                onClick={() => handleModificar('descripcion')}
                 style={{ marginTop: '16px' }}
               >
                 Modificar
               </Button>
-            </>
-          )}
-        </div>
-      </Paper>
+            )}
+          </div>
+          <div style={{ width: '30%', marginLeft: '16px' }}>
+            <Typography variant="h6">Imagen</Typography>
+            {editMode.imagen ? (
+              <>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  style={{ display: 'none' }}
+                  id="image-input"
+                />
+                <label htmlFor="image-input">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    component="span"
+                  >
+                    Seleccionar
+                  </Button>
+                </label>
+                <div
+                  style={{
+                    width: '100%',
+                    paddingBottom: '100%',
+                    position: 'relative',
+                  }}
+                >
+                  <img
+                    src={biografia.imagen}
+                    alt="Imagen de la Biografía"
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                    }}
+                  />
+                </div>
+                <Button
+                  variant="outlined"
+                  onClick={handleCancelarImagen}
+                  style={{ marginTop: '16px', marginLeft: '8px' }}
+                >
+                  Cancelar
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={() => handleGuardar('imagen')}
+                  style={{ marginTop: '16px', marginLeft: '8px' }}
+                >
+                  Guardar
+                </Button>
+              </>
+            ) : (
+              <>
+                <div
+                  style={{
+                    width: '100%',
+                    paddingBottom: '100%',
+                    position: 'relative',
+                  }}
+                >
+                  <img
+                    src={biografia.imagen}
+                    alt="Imagen de la Biografía"
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                    }}
+                  />
+                </div>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => handleModificar('imagen')}
+                  style={{ marginTop: '16px' }}
+                >
+                  Modificar
+                </Button>
+              </>
+            )}
+          </div>
+        </Paper>
+      </Grid>
     </Grid>
-  </Grid>
   
-    <div>
-    <CrearSeccionBiografia />
-    <TablaSeccionBiografia />
+    <div style={{ marginTop: '30px', marginBottom:'150px'}}>
+      <Typography variant="h4" gutterBottom style={{ textAlign: "center" }}>
+          Secciones
+      </Typography>
+      <CrearSeccionBiografia />
+      <TablaSeccionBiografia />
     </div>
-    </Container>
-
+  </Container>
   );
 } 
 

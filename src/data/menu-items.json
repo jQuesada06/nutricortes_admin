@@ -44,6 +44,11 @@
             "tittle": "Preguntas Frecuentes",
             "icon": "psychology_alt",
             "url": "/preguntas"
+        },
+        {
+            "tittle": "Reseñas",
+            "icon": "news",
+            "url": "/resenas"
         }
     ]
 }

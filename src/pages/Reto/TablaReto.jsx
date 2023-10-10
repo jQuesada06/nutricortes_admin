@@ -20,9 +20,9 @@ const TablaReto = () => {
 
   const columns = [
     
-    { field: "nombre", headerName: "nombre", width: 300 },
-    { field: "fechaInicial", headerName: "Fecha Inicial", width: 250 },
-    { field: "fechaFinal", headerName: "Fecha Final", width: 250 },
+    { field: "nombre", headerName: "nombre", width: 350 },
+    { field: "fechaInicial", headerName: "Fecha Inicial", width: 300 },
+    { field: "fechaFinal", headerName: "Fecha Final", width: 300 },
     //{ field: "imagen", headerName: "imagen", width: 150 },
     //{ field: "patrocinadores", headerName: "patrocinadores", width: 500 }, //Faltan los datos (imagen, link, nombre), porque es una lista
 

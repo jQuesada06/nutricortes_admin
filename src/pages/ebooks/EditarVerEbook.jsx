@@ -153,7 +153,7 @@ const EditarEbook = (props) => {
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               className="nombre-container"
-              label="Descripcion"
+              label="Descripción"
               autoComplete="off"
               value={descripcion}
               onChange={handleDescriptionChange}

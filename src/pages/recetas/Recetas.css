@@ -1,0 +1,20 @@
+.TextField {
+  margin: 2rem;
+}
+.nombre-container,
+.ubicacion-container {
+  width: 100%;
+}
+.ubicacion-container {
+  height: 10rem;
+}
+.ErrorMessage {
+  color: red;
+}
+.buscar {
+  width: 50%;
+}
+
+.modal-container {
+  width: 100%;
+}

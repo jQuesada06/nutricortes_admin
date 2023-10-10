@@ -110,8 +110,7 @@ const CrearConsultorio = (props) => {
   };
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Agregar Nuevo Consutorio</DialogTitle>
-      <DialogContent>Favor llenar todos los campos.</DialogContent>
+      <DialogTitle style={{ textAlign: "center" }}>Agregar nuevo Consutorio</DialogTitle>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
@@ -195,7 +194,7 @@ const CrearConsultorio = (props) => {
           </Grid>
           {formError && (
             <Grid item xs={12} justifyContent="flex-end">
-              <p style={{ color: "red" }}>Llene todos los formularios.</p>
+              <p style={{ color: "red", textAlign: "center" }}>Llene todos los formularios</p>
             </Grid>
           )}
           <Grid item xs={12} justifyContent="flex-end">

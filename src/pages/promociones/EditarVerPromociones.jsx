@@ -65,9 +65,9 @@ const EditarPromociones = (props) => {
       </DialogTitle>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={12} container justifyContent="center" alignItems="center" mb={2}>
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
-              label="Titulo"
+              label="Título"
               className="modal-container"
               value={titulo}
               onChange={handleTituloChange}
@@ -76,9 +76,9 @@ const EditarPromociones = (props) => {
               rows={2}
             />
           </Grid>
-          <Grid item xs={12} container justifyContent="center" alignItems="center" mb={2}>
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
-              label="Descripcion"
+              label="Descripción"
               className="modal-container"
               value={descripcion}
               onChange={handleDescripcionChange}

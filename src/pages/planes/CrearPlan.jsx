@@ -99,8 +99,7 @@ const CrearPlan = (props) => {
   };
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Agregar Nuevo Plan</DialogTitle>
-      <DialogContent>Favor llenar todos los campos.</DialogContent>
+      <DialogTitle style={{ textAlign: "center" }} >Agregar nuevo Plan</DialogTitle>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12} sx={{marginLeft: 2, marginRight: 2}}>
@@ -161,7 +160,7 @@ const CrearPlan = (props) => {
                 ))}
               </List> :
 
-              (<Typography sx={{marginLeft: 2, marginRight: 2}}>*Agrega algun detalle</Typography>)
+              (<Typography sx={{marginLeft: 2, marginRight: 2}}>*Agrega algún detalle</Typography>)
             }
           </Grid>
           <Grid item xs={12} sx={{marginLeft: 2, marginRight: 2}}>
@@ -175,7 +174,7 @@ const CrearPlan = (props) => {
           </Grid>
           {formError && (
             <Grid item xs={12} justifyContent="flex-end" sx={{marginLeft: 2, marginRight: 2}}>
-              <p style={{ color: "red" }}>Llene todos los Campos.</p>
+              <p style={{ color: "red", textAlign: "center" }}>Llene todos los Campos</p>
             </Grid>
           )}
           <Grid item xs={12} justifyContent="flex-end">

@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { TextField, IconButton, Button , Typography} from "@mui/material";
+import { IconButton, Button, Typography } from "@mui/material";
 import { Visibility, Delete, Edit } from "@mui/icons-material";
 import { collection, getDocs } from "@firebase/firestore";
-import CrearEbook from "./CrearEbook";
-import EditarVerPlan from "./EditarVerEbook";
-import EliminarEbook from "./EliminarEbook";
-import SearchBar from "../faqs/SearchBar";
+import CrearResena from "./CrearResena";
+import EditarVerResena from "./EditarVerResena";
+import EliminarResena from "./EliminarResena";
 import { db } from "../../firebase/config";
-import './Ebook.css'
+import SearchBar from "./SearchBar";
 
-const TablaEbooks = () => {
+const TablaResenas = () => {
   const [rows, setRows] = React.useState([]);
   const [filteredRows, setFilteredRows] = useState(rows);
   const [openCreate, setOpenCreate] = React.useState(false);
@@ -21,9 +20,10 @@ const TablaEbooks = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
 
   const columns = [
-    { field: "Nombre", headerName: "Nombre", width: 250 },
-    { field: "Descripcion", headerName: "Descripcion", width: 430 },
-    { field: "Precio", headerName: "Precio", width: 150 },
+    { field: "Id", headerName: "Id", width: 250 },
+    { field: "Usuario", headerName: "Usuario", width: 250 },
+    { field: "Puntuacion", headerName: "Puntuacion", width: 250 },
+    { field: "Detalle", headerName: "Detalle", width: 250 },
     {
       field: "actions",
       headerName: "Acciones",
@@ -56,7 +56,6 @@ const TablaEbooks = () => {
           >
             <Edit />
           </IconButton>
-
           <IconButton
             color="error"
             aria-label="delete"
@@ -115,7 +114,7 @@ const TablaEbooks = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const querySnapshot = await getDocs(collection(db, "Ebooks"));
+      const querySnapshot = await getDocs(collection(db, "resenas"));
       const data = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
@@ -128,10 +127,12 @@ const TablaEbooks = () => {
 
   return (
     <>
-      <div style={{ height: 371, width: "80%" }}>
+      <div style={{ height: 371, width: "80%"  }}>
+        {/* Agrega el título grande */}
         <Typography variant="h4" gutterBottom style={{ textAlign: "center" }}>
-          Ebooks
+          Reseñas
         </Typography>
+        {/* Envuelve el botón "Agregar" y la barra de búsqueda */}
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: "3%" }}>
           <SearchBar
             onSearch={(searchTerm) => setSearchQuery(searchTerm)}
@@ -146,7 +147,7 @@ const TablaEbooks = () => {
             Agregar
           </Button>
         </div>
-        <DataGrid
+        <DataGrid 
           rows={filteredRows}
           columns={columns}
           autoPageSize
@@ -154,20 +155,20 @@ const TablaEbooks = () => {
           disableColumnMenu={true}
         />
       </div>
-      <EditarVerPlan
+      <EditarVerResena
         open={openEditView}
         onClose={handleClose}
         onUpdate={handleUpdate}
         object={object}
         flagView={flagView}
       />
-      <EliminarEbook
+      <EliminarResena
         open={openDelete}
         onClose={handleClose}
         onRemove={handleDelete}
         object={object}
       />
-      <CrearEbook
+      <CrearResena
         open={openCreate}
         onClose={handleClose}
         onCreate={handleCreate}
@@ -176,4 +177,4 @@ const TablaEbooks = () => {
   );
 };
 
-export default TablaEbooks;
+export default TablaResenas;
