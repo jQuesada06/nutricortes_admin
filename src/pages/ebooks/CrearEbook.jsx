@@ -13,7 +13,7 @@ import {
   Typography
 } from "@mui/material";
 import { getDownloadURL, ref , uploadBytes} from "firebase/storage";
-import { collection, addDoc } from "@firebase/firestore";
+import { collection, addDoc, getDocs , where, query } from "@firebase/firestore";
 import { toast } from "react-toastify";
 import "./Ebook.css";
 import { db, storage , storageEbooksRef} from "../../firebase/config";

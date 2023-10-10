@@ -13,11 +13,13 @@ import TablaResenas from "./pages/resenas/TablaResenas";
 import Home from './pages/home/home';
 import { BrowserRouter as Router, Route, Routes,  } from "react-router-dom";
 import "./App.css";
+import { ToastContainer } from "react-toastify";
 
 
 const AppRouter = (props) => {
   return (
     <>
+      <ToastContainer />
       <Router>
         <div className="app">
           <Sidebar setLogged={props.setLogged} ></Sidebar>
