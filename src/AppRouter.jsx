@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import Sidebar from "./layouts/sidebar/Sidebar";
 import TablaPlanes from "./pages/planes/TablaPlanes";
 import TablaCarrito from "./pages/carrito/TablaCarrito";
@@ -10,17 +10,17 @@ import TablaPromociones from "./pages/promociones/TablaPromociones";
 import TablaReto from "./pages/Reto/TablaReto";
 import TablaRecetas from "./pages/recetas/TablaRecetas";
 import TablaResenas from "./pages/resenas/TablaResenas";
-import Home from './pages/home/home';
-import { BrowserRouter as Router, Route, Routes,  } from "react-router-dom";
+import Home from "./pages/home/home";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
-
+import TablaAsociados from "./pages/asociados/TablaAsociados";
 
 const AppRouter = (props) => {
   return (
     <>
       <Router>
         <div className="app">
-          <Sidebar setLogged={props.setLogged} ></Sidebar>
+          <Sidebar setLogged={props.setLogged}></Sidebar>
           <main>
             <Routes>
               <Route path="/" exact Component={Home}></Route>
@@ -34,13 +34,16 @@ const AppRouter = (props) => {
               <Route path="/promociones" Component={TablaPromociones}></Route>
               <Route path="/recetas" Component={TablaRecetas}></Route>
               <Route path="/resenas" Component={TablaResenas}></Route>
-              <Route path="/*" Component={Home}> </Route>
+              <Route path="/asociados" Component={TablaAsociados}></Route>
+              <Route path="/*" Component={Home}>
+                {" "}
+              </Route>
             </Routes>
           </main>
         </div>
       </Router>
     </>
-  )
-}
+  );
+};
 
 export default AppRouter;
