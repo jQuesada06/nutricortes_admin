@@ -9,14 +9,18 @@ import {
   Grid,
   Card,
   CardContent,
-  CardMedia
+  CardMedia,
 } from "@mui/material";
-import { setDoc, doc } from '@firebase/firestore'
+import { setDoc, doc } from "@firebase/firestore";
 import { toast } from "react-toastify";
 import "./Ebook.css";
 import { db, storage } from "../../firebase/config";
-import { getDownloadURL, ref, uploadBytes, deleteObject } from "firebase/storage";
-
+import {
+  getDownloadURL,
+  ref,
+  uploadBytes,
+  deleteObject,
+} from "firebase/storage";
 
 const EditarEbook = (props) => {
   const { onClose, open, object, onUpdate, flagView } = props;
@@ -54,24 +58,25 @@ const EditarEbook = (props) => {
   const handleDescriptionChange = (event) => setDescripcion(event.target.value);
   const handlePrecioChange = (event) => setPrecio(event.target.value);
 
-
   const deleteImage = async () => {
-    const ebooksRef = ref(storage, imagen)
-    deleteObject(ebooksRef).then(() => {
-      // File deleted successfully
-    }).catch((error) => {
-      console.log(error)
-    });
+    const ebooksRef = ref(storage, imagen);
+    deleteObject(ebooksRef)
+      .then(() => {
+        // File deleted successfully
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const uploadImage = async () => {
     if (!image) {
-      alert('Selecciona un archivo primero.');
+      alert("Selecciona un archivo primero.");
       return;
     }
     const timestamp = new Date().getTime(); // Obtiene la marca de tiempo actual en milisegundos
     const imageName = `${timestamp}_${image.name}`;
-    const ebooksRef = ref(storage, `ebooks/${imageName}`)
+    const ebooksRef = ref(storage, `ebooks/${imageName}`);
     try {
       await uploadBytes(ebooksRef, image);
 
@@ -83,19 +88,17 @@ const EditarEbook = (props) => {
     }
   };
 
-  
   const handleUpdate = async () => {
     const collectionRef = doc(db, "Ebooks", object.object.id);
     await deleteImage();
     const url = await uploadImage();
     try {
-      
       const plan = {
         id: object.object.id,
         Nombre: nombre,
         Descripcion: descripcion,
         Imagen: url,
-        Precio: precio
+        Precio: precio,
       };
       await setDoc(collectionRef, plan);
       toast.success("Actualizado", { autoClose: 3000 });
@@ -114,8 +117,8 @@ const EditarEbook = (props) => {
     setNombre("");
     setDescripcion("");
     setPrecio("");
-    setImage(null)
-    setImageURL(null)
+    setImage(null);
+    setImageURL(null);
   };
 
   const handleSubmit = (event) => {
@@ -130,10 +133,14 @@ const EditarEbook = (props) => {
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>
-        {flagView ? "Ver Ebook" : "Actualizar Ebook"}
-      </DialogTitle>
-      <DialogContent  style={{ marginBottom: "20px",  overflow: "hidden", overflowY: "hidden"}} >
+      <DialogTitle>{flagView ? "Ver Ebook" : "Actualizar Ebook"}</DialogTitle>
+      <DialogContent
+        style={{
+          marginBottom: "20px",
+          overflow: "hidden",
+          overflowY: "hidden",
+        }}
+      >
         {flagView
           ? "Detallade del Ebook"
           : "Edite a los datos del Ebook existente."}
@@ -163,39 +170,40 @@ const EditarEbook = (props) => {
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <Card>
               {flagView ? (
-                <CardContent >
-                <CardMedia sx={{ marginTop: "20px" }}
-                  component="img"
-                  alt="Imagen seleccionada"
-                  height="auto"
-                  image={imagen}
-                />
-              </CardContent>
-              ) : (
-                <CardContent >
-                <input
-                  type="file"
-                  accept="image/*"
-                  id="image-upload"
-                  style={{ display: 'none' }}
-                  onChange={handleImageUpload}
-                />
-                <label htmlFor="image-upload">
-                  <Button variant="outlined" component="span">
-                    Subir imagen
-                  </Button>
-                </label>
-                {imageURL && (
-                  <CardMedia sx={{ marginTop: "20px" }}
+                <CardContent>
+                  <CardMedia
+                    sx={{ marginTop: "20px" }}
                     component="img"
                     alt="Imagen seleccionada"
                     height="auto"
-                    image={imageURL}
+                    image={imagen}
                   />
-                )}
-              </CardContent>
+                </CardContent>
+              ) : (
+                <CardContent>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    id="image-upload"
+                    style={{ display: "none" }}
+                    onChange={handleImageUpload}
+                  />
+                  <label htmlFor="image-upload">
+                    <Button variant="outlined" component="span">
+                      Subir imagen
+                    </Button>
+                  </label>
+                  {imageURL && (
+                    <CardMedia
+                      sx={{ marginTop: "20px" }}
+                      component="img"
+                      alt="Imagen seleccionada"
+                      height="auto"
+                      image={imageURL}
+                    />
+                  )}
+                </CardContent>
               )}
-
             </Card>
           </Grid>
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
@@ -225,7 +233,14 @@ const EditarEbook = (props) => {
                 </Button>
               ) : (
                 <>
-                  <Button onClick={(() => { handleClose(); clearFields() })}>Cerrar</Button>
+                  <Button
+                    onClick={() => {
+                      handleClose();
+                      clearFields();
+                    }}
+                  >
+                    Cerrar
+                  </Button>
                   <Button type="submit" variant="contained" color="primary">
                     Guardar
                   </Button>

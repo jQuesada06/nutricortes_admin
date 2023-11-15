@@ -11,7 +11,12 @@ import { setDoc, doc } from "@firebase/firestore";
 import { toast } from "react-toastify";
 import "./Recetas.css";
 import { db, storage } from "../../firebase/config";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import {
+  getDownloadURL,
+  ref,
+  uploadBytes,
+  deleteObject,
+} from "firebase/storage";
 
 const EditarReceta = (props) => {
   const { onClose, open, object, onUpdate, flagView } = props;
@@ -21,7 +26,9 @@ const EditarReceta = (props) => {
   const [rendimiento, setRendimiento] = useState(0);
   const [intercambio, setIntercambio] = useState("");
   const [video, setVideo] = useState("");
-  const [imagen, setImagen] = useState(null);
+  const [image, setImage] = useState(null);
+  const [imageURL, setImageURL] = useState(null);
+  const [imagen, setImagen] = useState("");
   const [formError, setFormError] = useState(false);
 
   useEffect(() => {
@@ -47,32 +54,58 @@ const EditarReceta = (props) => {
 
   const handleImagenChange = (event) => {
     const file = event.target.files[0];
+    setImage(file);
     if (file) {
       const reader = new FileReader();
-
-      reader.onload = (e) => {
-        setImagen(e.target.result);
+      reader.onload = () => {
+        setImageURL(reader.result);
       };
-
       reader.readAsDataURL(file);
     }
   };
 
+  const uploadImage = async () => {
+    if (!image) {
+      toast.error("Debe seleccionar un archivo.", {
+        autoClose: 5000,
+      });
+      return null;
+    }
+    const timestamp = new Date().getTime();
+    const imageName = `${timestamp}_${image.name}`;
+    const recetasRef = ref(storage, `recipe_images/${imageName}`);
+    try {
+      await uploadBytes(recetasRef, image);
+
+      const downloadURL = await getDownloadURL(recetasRef);
+      return downloadURL;
+    } catch (error) {
+      toast.error("Hubo un error al cargar la imagen", {
+        autoClose: 3000,
+      });
+      return null;
+    }
+  };
+
   const handleRemoveImage = () => {
-    setImagen(null);
+    setImage(null);
+    setImageURL(null);
+  };
+
+  const deleteImage = async () => {
+    const recetasRef = ref(storage, imagen);
+    deleteObject(recetasRef)
+      .then(() => {})
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleUpdate = async () => {
     const collectionRef = doc(db, "recetas", object.object.id);
+    await deleteImage();
+    const url = await uploadImage();
     try {
-      let imageUrl = imagen;
-
-      if (imagen) {
-        const storageRef = ref(storage, `recipe_images/${titulo}`);
-        await uploadBytes(storageRef, imagen, { contentType: "image/jpeg" });
-        imageUrl = await getDownloadURL(storageRef);
-      }
-
       const receta = {
         id: object.object.id,
         Titulo: titulo,
@@ -81,7 +114,7 @@ const EditarReceta = (props) => {
         Rendimiento: rendimiento,
         Intercambio: intercambio,
         Video: video,
-        Imagen: imageUrl,
+        Imagen: url,
       };
 
       await setDoc(collectionRef, receta);
@@ -105,7 +138,7 @@ const EditarReceta = (props) => {
       rendimiento === 0 ||
       intercambio === "" ||
       video === "" ||
-      imagen === null
+      image === null
     ) {
       setFormError(true);
       return;
@@ -209,6 +242,19 @@ const EditarReceta = (props) => {
               </label>
             </Grid>
           )}
+
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
+            {imageURL && (
+              <div>
+                <img
+                  src={imageURL}
+                  alt={`Receta-${titulo}`}
+                  style={{ maxWidth: "100px" }}
+                />
+                <Button onClick={handleRemoveImage}>X</Button>
+              </div>
+            )}
+          </Grid>
 
           {!flagView && formError && (
             <Grid item xs={12} justifyContent="flex-end">

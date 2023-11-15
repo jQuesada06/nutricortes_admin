@@ -121,6 +121,7 @@ const CrearReceta = (props) => {
 
   const handleRemoveImage = () => {
     setImage(null);
+    setImageURL(null);
   };
 
   const handleNewIngredientesChange = (event, newValue) => {
