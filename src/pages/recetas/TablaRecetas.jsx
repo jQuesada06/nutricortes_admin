@@ -20,11 +20,9 @@ const TablaRecetas = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
 
   const columns = [
-    { field: "Titulo", headerName: "Titulo", width: 250 },
-    { field: "Categoria", headerName: "Categoria", width: 250 },
-    //{ field: "Video", headerName: "Video", width: 200 },
-    //{ field: "Ingredientes", headerName: "Ingredientes", width: 300 },
-    { field: "Descripcion", headerName: "Descripcion", width: 450 },
+    { field: "Titulo", headerName: "Título", width: 200 },
+    { field: "Rendimiento", headerName: "Rendimiento", width: 150 },
+    { field: "Intercambio", headerName: "Intercambio", width: 450 },
     {
       field: "actions",
       headerName: "Acciones",
@@ -128,16 +126,18 @@ const TablaRecetas = () => {
 
   return (
     <>
-      <div style={{ height: 371, width: "80%"  }}>
-        {/* Agrega el título grande */}
+      <div style={{ height: 371, width: "80%" }}>
         <Typography variant="h4" gutterBottom style={{ textAlign: "center" }}>
           Recetas
         </Typography>
-        {/* Envuelve el botón "Agregar" y la barra de búsqueda */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: "3%" }}>
-          <SearchBar
-            onSearch={(searchTerm) => setSearchQuery(searchTerm)}
-          />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginBottom: "3%",
+          }}
+        >
+          <SearchBar onSearch={(searchTerm) => setSearchQuery(searchTerm)} />
           <Button
             variant="contained"
             onClick={() => {
@@ -148,7 +148,7 @@ const TablaRecetas = () => {
             Agregar
           </Button>
         </div>
-        <DataGrid 
+        <DataGrid
           rows={filteredRows}
           columns={columns}
           autoPageSize

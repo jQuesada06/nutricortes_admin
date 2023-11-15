@@ -6,7 +6,7 @@ import {
   DialogActions,
   Button,
 } from "@mui/material";
-import { getFirestore, doc, deleteDoc } from "@firebase/firestore";
+import { doc, deleteDoc } from "@firebase/firestore";
 import { toast } from "react-toastify";
 import { db } from "../../firebase/config";
 
