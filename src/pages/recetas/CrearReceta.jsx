@@ -17,15 +17,6 @@ import { db, storage } from "../../firebase/config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const CrearReceta = (props) => {
-  /* Para una receta necesito
-        titulo
-        lista de ingredientes 
-        preparación
-        rendimiento en porciones: un número entero
-        intercambio: un string
-        link del video
-        imagen
-  */
   const { onClose, open, onCreate } = props;
   const [titulo, setTitulo] = useState("");
   const [ingredientes, setIngredientes] = useState([]);
@@ -33,7 +24,8 @@ const CrearReceta = (props) => {
   const [rendimiento, setRendimiento] = useState(0);
   const [intercambio, setIntercambio] = useState("");
   const [video, setVideo] = useState("");
-  const [imagen, setImagen] = useState(null);
+  const [image, setImage] = useState(null);
+  const [imageURL, setImageURL] = useState(null);
   const [formError, setFormError] = useState(false);
 
   const handleClose = () => onClose();
@@ -43,29 +35,93 @@ const CrearReceta = (props) => {
   const handleIntercambioChange = (event) => setIntercambio(event.target.value);
   const handleVideoChange = (event) => setVideo(event.target.value);
 
+  const [ingredientesOptions, setIngredientesOptions] = useState([
+    "Aceite de Oliva",
+    "Ajo",
+    "Albahaca",
+    "Arroz",
+    "Azúcar",
+    "Bicarbonato de Sodio",
+    "Brócoli",
+    "Camarones",
+    "Carne Molida de Pavo",
+    "Carne Molida de Res",
+    "Cebolla",
+    "Canela",
+    "Cerdo",
+    "Chile en Polvo",
+    "Cilantro",
+    "Comino",
+    "Crema Agria",
+    "Espinaca",
+    "Extracto de Vainilla",
+    "Harina",
+    "Huevos",
+    "Ketchup",
+    "Leche",
+    "Levadura en Polvo",
+    "Limón",
+    "Mantequilla",
+    "Mayonesa",
+    "Miel",
+    "Mostaza",
+    "Orégano",
+    "Papa",
+    "Perejil",
+    "Pescado",
+    "Pimiento",
+    "Pimienta",
+    "Pollo",
+    "Queso",
+    "Res",
+    "Romero",
+    "Salsa de Soja",
+    "Sal",
+    "Tomate",
+    "Tomillo",
+    "Vinagre",
+    "Yogur",
+    "Zanahoria",
+  ]);
+
   const handleImagenChange = (event) => {
-    {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
+    const file = event.target.files[0];
+    setImage(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImageURL(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
-        reader.onload = (e) => {
-          setImagen(e.target.result);
-        };
+  const uploadImage = async () => {
+    if (!image) {
+      toast.error("Debe seleccionar un archivo.", {
+        autoClose: 5000,
+      });
+      return null;
+    }
+    const timestamp = new Date().getTime();
+    const imageName = `${timestamp}_${image.name}`;
+    const recetasRef = ref(storage, `recipe_images/${imageName}`);
+    try {
+      await uploadBytes(recetasRef, image);
 
-        reader.readAsDataURL(file);
-      }
+      const downloadURL = await getDownloadURL(recetasRef);
+      return downloadURL;
+    } catch (error) {
+      toast.error("Hubo un error al cargar la imagen", {
+        autoClose: 3000,
+      });
+      return null;
     }
   };
 
   const handleRemoveImage = () => {
-    setImagen(null);
+    setImage(null);
   };
-
-  const [ingredientesOptions, setIngredientesOptions] = useState([
-    "Huevos",
-    "Cebolla",
-  ]);
 
   const handleNewIngredientesChange = (event, newValue) => {
     setIngredientes(newValue);
@@ -75,39 +131,7 @@ const CrearReceta = (props) => {
     }
   };
 
-  const handleCreate = async () => {
-    const collectionRef = collection(db, "recetas");
-    try {
-      const storageRef = ref(storage, `recipe_images/${titulo}`);
-      await uploadBytes(storageRef, imagen, { contentType: "image/jpeg" });
-
-      const imageUrl = await getDownloadURL(storageRef);
-
-      const receta = {
-        Titulo: titulo,
-        Ingredientes: ingredientes,
-        Preparacion: preparacion,
-        Rendimiento: rendimiento,
-        Intercambio: intercambio,
-        Video: video,
-        Imagen: imageUrl,
-      };
-      const docRef = await addDoc(collectionRef, receta);
-      receta.id = docRef.id;
-      onCreate(receta);
-      toast.success("Agregado correctamente", {
-        autoClose: 3000,
-      });
-    } catch (error) {
-      toast.error("Hubo un error al agregar", {
-        autoClose: 3000,
-      });
-    }
-    clearFields();
-    handleClose();
-  };
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (
       titulo === "" ||
@@ -116,12 +140,40 @@ const CrearReceta = (props) => {
       rendimiento === 0 ||
       intercambio === "" ||
       video === "" ||
-      imagen === null
+      image === null
     ) {
       setFormError(true);
       return;
     }
-    handleCreate();
+
+    const url = await uploadImage();
+    if (url) {
+      const collectionRef = collection(db, "recetas");
+      try {
+        const receta = {
+          Titulo: titulo,
+          Ingredientes: ingredientes,
+          Preparacion: preparacion,
+          Rendimiento: rendimiento,
+          Intercambio: intercambio,
+          Video: video,
+          Imagen: url,
+        };
+
+        const docRef = await addDoc(collectionRef, receta);
+        receta.id = docRef.id;
+        onCreate(receta);
+        toast.success("Agregado correctamente", {
+          autoClose: 3000,
+        });
+        clearFields();
+        handleClose();
+      } catch (error) {
+        toast.error("Hubo un error al agregar", {
+          autoClose: 3000,
+        });
+      }
+    }
     setFormError(false);
   };
 
@@ -132,8 +184,10 @@ const CrearReceta = (props) => {
     setRendimiento(0);
     setIntercambio("");
     setVideo("");
-    setImagen(null);
+    setImage(null);
+    setImageURL(null);
   };
+
   return (
     <div className="crear-receta">
       <Dialog open={open} onClose={handleClose}>
@@ -239,10 +293,10 @@ const CrearReceta = (props) => {
             </Grid>
 
             <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
-              {imagen && (
+              {imageURL && (
                 <div>
                   <img
-                    src={imagen}
+                    src={imageURL}
                     alt={`Receta-${titulo}`}
                     style={{ maxWidth: "100px" }}
                   />
