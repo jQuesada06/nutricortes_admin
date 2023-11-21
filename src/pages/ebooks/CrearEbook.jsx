@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   Dialog,
   DialogTitle,
-  DialogContent,
   TextField,
   Button,
   DialogActions,
@@ -10,13 +9,19 @@ import {
   Card,
   CardContent,
   CardMedia,
-  Typography,
+  InputLabel
 } from "@mui/material";
-import { getDownloadURL, ref , uploadBytes} from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { collection, addDoc } from "@firebase/firestore";
 import { toast } from "react-toastify";
 import "./Ebook.css";
-import { db, storage, storageEbooksRef } from "../../firebase/config";
+import { db, storage } from "../../firebase/config";
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import Box from '@mui/material/Box';
+import categoryItems from './categoryOptions.json';
+import FormControl from '@mui/material/FormControl';
+
 
 const CrearEbook = (props) => {
   const { onClose, open, onCreate } = props;
@@ -27,6 +32,7 @@ const CrearEbook = (props) => {
   const [formError, setFormError] = useState(false);
   const [imageURL, setImageURL] = useState(null);
   const [image, setImage] = useState(null);
+  const [category, setCategory] = React.useState('');
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -44,15 +50,18 @@ const CrearEbook = (props) => {
   const handleNameChange = (event) => setNombre(event.target.value);
   const handleDescriptionChange = (event) => setDescripcion(event.target.value);
   const handlePrecioChange = (event) => setPrecio(event.target.value);
+  const handleCategoryChange = (event) => setCategory(event.target.value);
 
   const uploadImage = async () => {
     if (!image) {
       alert("Selecciona un archivo primero.");
       return;
     }
+
     const timestamp = new Date().getTime(); // Obtiene la marca de tiempo actual en milisegundos
     const imageName = `${timestamp}_${image.name}`;
     const ebooksRef = ref(storage, `ebooks/${imageName}`);
+
     try {
       await uploadBytes(ebooksRef, image);
 
@@ -71,15 +80,16 @@ const CrearEbook = (props) => {
     const url = await uploadImage();
 
     try {
-      const plan = {
+      const ebook = {
         Nombre: nombre,
         Descripcion: descripcion,
         Imagen: url,
         Precio: precio,
+        Categoria: category
       };
-      const docRef = await addDoc(collectionRef, plan);
-      plan.id = docRef.id;
-      onCreate(plan);
+      const docRef = await addDoc(collectionRef, ebook);
+      ebook.id = docRef.id;
+      onCreate(ebook);
       toast.success("Agregado correctamente", {
         autoClose: 3000,
       });
@@ -91,6 +101,7 @@ const CrearEbook = (props) => {
     clearFields();
     handleClose();
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     if (nombre === "" || descripcion === "" || precio === "") {
@@ -100,13 +111,16 @@ const CrearEbook = (props) => {
     handleCreate();
     setFormError(false);
   };
+
   const clearFields = () => {
     setNombre("");
     setDescripcion("");
     setPrecio("");
     setImage(null);
     setImageURL(null);
+    setCategory('')
   };
+
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle style={{ textAlign: "center" }}>
@@ -136,6 +150,28 @@ const CrearEbook = (props) => {
               onChange={handleDescriptionChange}
             />
           </Grid>
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }} >
+            <Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Categoría</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={category}
+                  label="Categoría"
+                  onChange={handleCategoryChange}
+                  sx={{ width: '100%' }}
+                >
+                  {
+                    categoryItems.options.map((element, index) => (
+                      <MenuItem key={index} value={element.value}>{element.tittle}</MenuItem>
+                    ))
+                  }
+                </Select>
+              </FormControl>
+            </Box>
+          </Grid>
+
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <Card>
               <CardContent>

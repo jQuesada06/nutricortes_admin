@@ -1,0 +1,24 @@
+{
+    "options": [
+        {
+            "tittle": "Fitness",
+            "value": "fitness"
+        },
+        {
+            "tittle": "Cocina",
+            "value": "cocina"
+        },
+        {
+            "tittle": "Ejercicio",
+            "value": "ejercicio"
+        },
+        {
+            "tittle": "Nutrición",
+            "value": "nutricion"
+        },
+        {
+            "tittle": "Salud",
+            "value": "salud"
+        }
+    ]
+}

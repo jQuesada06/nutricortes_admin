@@ -21,9 +21,10 @@ const TablaEbooks = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
 
   const columns = [
-    { field: "Nombre", headerName: "Nombre", width: 250 },
-    { field: "Descripcion", headerName: "Descripcion", width: 430 },
+    { field: "Nombre", headerName: "Nombre", width: 200 },
+    { field: "Descripcion", headerName: "Descripción", width: 400 },
     { field: "Precio", headerName: "Precio", width: 150 },
+    { field: "Categoria", headerName: "Categoría", width: 150},
     {
       field: "actions",
       headerName: "Acciones",

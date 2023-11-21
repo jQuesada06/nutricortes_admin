@@ -10,6 +10,11 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Box,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import { setDoc, doc } from "@firebase/firestore";
 import { toast } from "react-toastify";
@@ -21,16 +26,20 @@ import {
   uploadBytes,
   deleteObject,
 } from "firebase/storage";
+import categoryItems from './categoryOptions.json';
+
 
 const EditarEbook = (props) => {
   const { onClose, open, object, onUpdate, flagView } = props;
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
-  const [imagen, setImagen] = useState("");
   const [precio, setPrecio] = useState("");
   const [formError, setFormError] = useState(false);
+  const [imageChanged, setImageChanged] = useState(false);
+  const [imageUrlToDelete, setImageUrlToDelete] = useState('');
   const [imageURL, setImageURL] = useState(null);
   const [image, setImage] = useState(null);
+  const [category, setCategory] = React.useState('');
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -40,6 +49,7 @@ const EditarEbook = (props) => {
       reader.onload = () => {
         setImageURL(reader.result);
       };
+      setImageChanged(true);
       reader.readAsDataURL(file);
     }
   };
@@ -48,8 +58,10 @@ const EditarEbook = (props) => {
     if (object && object.object) {
       setNombre(object.object.Nombre);
       setDescripcion(object.object.Descripcion);
-      setImagen(object.object.Imagen);
+      setImageURL(object.object.Imagen);
       setPrecio(object.object.Precio);
+      setCategory(object.object.Categoria);
+      setImageUrlToDelete(object.object.Imagen);
     }
   }, [object]);
 
@@ -57,12 +69,13 @@ const EditarEbook = (props) => {
   const handleNameChange = (event) => setNombre(event.target.value);
   const handleDescriptionChange = (event) => setDescripcion(event.target.value);
   const handlePrecioChange = (event) => setPrecio(event.target.value);
+  const handleCategoryChange = (event) => setCategory(event.target.value);
 
   const deleteImage = async () => {
-    const ebooksRef = ref(storage, imagen);
+    const ebooksRef = ref(storage, imageUrlToDelete);
     deleteObject(ebooksRef)
       .then(() => {
-        // File deleted successfully
+        console.log("Se logro")
       })
       .catch((error) => {
         console.log(error);
@@ -89,9 +102,15 @@ const EditarEbook = (props) => {
   };
 
   const handleUpdate = async () => {
+
     const collectionRef = doc(db, "Ebooks", object.object.id);
-    await deleteImage();
+
+    if (imageChanged) {
+      await deleteImage();
+    }
+
     const url = await uploadImage();
+
     try {
       const plan = {
         id: object.object.id,
@@ -99,6 +118,7 @@ const EditarEbook = (props) => {
         Descripcion: descripcion,
         Imagen: url,
         Precio: precio,
+        Categoria: category,
       };
       await setDoc(collectionRef, plan);
       toast.success("Actualizado", { autoClose: 3000 });
@@ -119,8 +139,8 @@ const EditarEbook = (props) => {
     setPrecio("");
     setImage(null);
     setImageURL(null);
+    setCategory('');
   };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     if (nombre === "" || descripcion === "" || precio === "") {
@@ -167,6 +187,28 @@ const EditarEbook = (props) => {
               disabled={flagView}
             />
           </Grid>
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }} >
+            <Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Categoría</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={category}
+                  label="Categoría"
+                  onChange={handleCategoryChange}
+                  sx={{ width: '100%' }}
+                  disabled={flagView}
+                >
+                  {
+                    categoryItems.options.map((element, index) => (
+                      <MenuItem key={index} value={element.value}>{element.tittle}</MenuItem>
+                    ))
+                  }
+                </Select>
+              </FormControl>
+            </Box>
+          </Grid>
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <Card>
               {flagView ? (
@@ -176,7 +218,7 @@ const EditarEbook = (props) => {
                     component="img"
                     alt="Imagen seleccionada"
                     height="auto"
-                    image={imagen}
+                    image={imageURL}
                   />
                 </CardContent>
               ) : (
