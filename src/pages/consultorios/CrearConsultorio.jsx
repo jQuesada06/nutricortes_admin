@@ -3,18 +3,17 @@ import React, { useState } from "react";
 import {
   Dialog,
   DialogTitle,
-  DialogContent,
   TextField,
   Button,
   DialogActions,
   Grid,
   Tooltip,
+  Autocomplete,
 } from "@mui/material";
-import { getFirestore, collection, addDoc } from "@firebase/firestore";
+import { collection, addDoc } from "@firebase/firestore";
 import { toast } from "react-toastify";
 import "./Consultorios.css";
 import { db } from "../../firebase/config";
-import Autocomplete from "@mui/material/Autocomplete";
 
 const CrearConsultorio = (props) => {
   const { onClose, open, onCreate } = props;
@@ -110,7 +109,9 @@ const CrearConsultorio = (props) => {
   };
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle style={{ textAlign: "center" }}>Agregar nuevo Consutorio</DialogTitle>
+      <DialogTitle style={{ textAlign: "center" }}>
+        Agregar nuevo Consutorio
+      </DialogTitle>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
@@ -194,7 +195,9 @@ const CrearConsultorio = (props) => {
           </Grid>
           {formError && (
             <Grid item xs={12} justifyContent="flex-end">
-              <p style={{ color: "red", textAlign: "center" }}>Llene todos los formularios</p>
+              <p style={{ color: "red", textAlign: "center" }}>
+                Llene todos los formularios
+              </p>
             </Grid>
           )}
           <Grid item xs={12} justifyContent="flex-end">

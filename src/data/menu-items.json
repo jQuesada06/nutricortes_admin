@@ -1,6 +1,11 @@
 {
     "items": [
         {
+            "tittle": "Asociados",
+            "icon": "add_business",
+            "url": "/asociados"
+        },
+        {
             "tittle": "Biografía",
             "icon": "person_book",
             "url": "/biografia"

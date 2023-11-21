@@ -3,13 +3,14 @@ import { DataGrid } from "@mui/x-data-grid";
 import { IconButton, Button, Typography } from "@mui/material";
 import { Visibility, Delete, Edit } from "@mui/icons-material";
 import { collection, getDocs } from "@firebase/firestore";
-import CrearReceta from "./CrearReceta";
-import EditarVerReceta from "./EditarVerReceta";
-import EliminarReceta from "./EliminarReceta";
-import { db } from "../../firebase/config";
-import SearchBar from "../faqs/SearchBar";
 
-const TablaRecetas = () => {
+import CrearAsociado from "./CrearAsociado";
+import EditarVerAsociado from "./EditarVerAsociado";
+import EliminarAsociado from "./EliminarAsociado";
+import { db } from "../../firebase/config";
+import SearchBar from "./SearchBar";
+
+const TablaAsociados = () => {
   const [rows, setRows] = React.useState([]);
   const [filteredRows, setFilteredRows] = useState(rows);
   const [openCreate, setOpenCreate] = React.useState(false);
@@ -20,9 +21,8 @@ const TablaRecetas = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
 
   const columns = [
-    { field: "Titulo", headerName: "Título", width: 200 },
-    { field: "Rendimiento", headerName: "Rendimiento", width: 150 },
-    { field: "Intercambio", headerName: "Intercambio", width: 450 },
+    { field: "Nombre", headerName: "Nombre", width: 400 },
+    { field: "URL", headerName: "URL", width: 500 },
     {
       field: "actions",
       headerName: "Acciones",
@@ -113,7 +113,7 @@ const TablaRecetas = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const querySnapshot = await getDocs(collection(db, "recetas"));
+      const querySnapshot = await getDocs(collection(db, "asociados"));
       const data = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
@@ -128,7 +128,7 @@ const TablaRecetas = () => {
     <>
       <div style={{ height: 371, width: "80%" }}>
         <Typography variant="h4" gutterBottom style={{ textAlign: "center" }}>
-          Recetas
+          Asociados
         </Typography>
         <div
           style={{
@@ -156,20 +156,20 @@ const TablaRecetas = () => {
           disableColumnMenu={true}
         />
       </div>
-      <EditarVerReceta
+      <EditarVerAsociado
         open={openEditView}
         onClose={handleClose}
         onUpdate={handleUpdate}
         object={object}
         flagView={flagView}
       />
-      <EliminarReceta
+      <EliminarAsociado
         open={openDelete}
         onClose={handleClose}
         onRemove={handleDelete}
         object={object}
       />
-      <CrearReceta
+      <CrearAsociado
         open={openCreate}
         onClose={handleClose}
         onCreate={handleCreate}
@@ -178,4 +178,4 @@ const TablaRecetas = () => {
   );
 };
 
-export default TablaRecetas;
+export default TablaAsociados;

@@ -10,13 +10,13 @@ import {
   Card,
   CardContent,
   CardMedia,
-  Typography
+  Typography,
 } from "@mui/material";
 import { getDownloadURL, ref , uploadBytes} from "firebase/storage";
-import { collection, addDoc, getDocs , where, query } from "@firebase/firestore";
+import { collection, addDoc } from "@firebase/firestore";
 import { toast } from "react-toastify";
 import "./Ebook.css";
-import { db, storage , storageEbooksRef} from "../../firebase/config";
+import { db, storage, storageEbooksRef } from "../../firebase/config";
 
 const CrearEbook = (props) => {
   const { onClose, open, onCreate } = props;
@@ -27,8 +27,6 @@ const CrearEbook = (props) => {
   const [formError, setFormError] = useState(false);
   const [imageURL, setImageURL] = useState(null);
   const [image, setImage] = useState(null);
-  
-
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -47,15 +45,14 @@ const CrearEbook = (props) => {
   const handleDescriptionChange = (event) => setDescripcion(event.target.value);
   const handlePrecioChange = (event) => setPrecio(event.target.value);
 
-
   const uploadImage = async () => {
     if (!image) {
-      alert('Selecciona un archivo primero.');
+      alert("Selecciona un archivo primero.");
       return;
     }
     const timestamp = new Date().getTime(); // Obtiene la marca de tiempo actual en milisegundos
     const imageName = `${timestamp}_${image.name}`;
-    const ebooksRef = ref(storage,`ebooks/${imageName}`)
+    const ebooksRef = ref(storage, `ebooks/${imageName}`);
     try {
       await uploadBytes(ebooksRef, image);
 
@@ -63,8 +60,8 @@ const CrearEbook = (props) => {
       const downloadURL = await getDownloadURL(ebooksRef);
       return downloadURL;
     } catch (error) {
-      console.log(error)
-      alert('Error al cargar la imagen.');
+      console.log(error);
+      alert("Error al cargar la imagen.");
     }
   };
 
@@ -72,13 +69,13 @@ const CrearEbook = (props) => {
     const collectionRef = collection(db, "Ebooks");
 
     const url = await uploadImage();
-   
+
     try {
       const plan = {
         Nombre: nombre,
         Descripcion: descripcion,
         Imagen: url,
-        Precio: precio
+        Precio: precio,
       };
       const docRef = await addDoc(collectionRef, plan);
       plan.id = docRef.id;
@@ -107,15 +104,21 @@ const CrearEbook = (props) => {
     setNombre("");
     setDescripcion("");
     setPrecio("");
-    setImage(null)
-    setImageURL(null)
+    setImage(null);
+    setImageURL(null);
   };
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle style={{ textAlign: "center" }} >Agregar nuevo eBook</DialogTitle>
+      <DialogTitle style={{ textAlign: "center" }}>
+        Agregar nuevo eBook
+      </DialogTitle>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={12} sx={{ marginTop: 2, marginLeft: 2, marginRight: 2 }}>
+          <Grid
+            item
+            xs={12}
+            sx={{ marginTop: 2, marginLeft: 2, marginRight: 2 }}
+          >
             <TextField
               className="nombre-container"
               label="Nombre"
@@ -135,12 +138,12 @@ const CrearEbook = (props) => {
           </Grid>
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <Card>
-              <CardContent >
+              <CardContent>
                 <input
                   type="file"
                   accept="image/*"
                   id="image-upload"
-                  style={{ display: 'none' }}
+                  style={{ display: "none" }}
                   onChange={handleImageUpload}
                 />
                 <label htmlFor="image-upload">
@@ -149,7 +152,8 @@ const CrearEbook = (props) => {
                   </Button>
                 </label>
                 {imageURL && (
-                  <CardMedia sx={{ marginTop: "20px" }}
+                  <CardMedia
+                    sx={{ marginTop: "20px" }}
                     component="img"
                     alt="Imagen seleccionada"
                     height="auto"
@@ -159,7 +163,11 @@ const CrearEbook = (props) => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2, marginBottom: 2 }}>
+          <Grid
+            item
+            xs={12}
+            sx={{ marginLeft: 2, marginRight: 2, marginBottom: 2 }}
+          >
             <TextField
               className="precio-container"
               label="Precio"
@@ -169,13 +177,27 @@ const CrearEbook = (props) => {
             />
           </Grid>
           {formError && (
-            <Grid item xs={12} justifyContent="flex-end" sx={{ marginLeft: 2, marginRight: 2 }}>
-              <p style={{ color: "red", textAlign: "center"  }}>Llene todos los Campos</p>
+            <Grid
+              item
+              xs={12}
+              justifyContent="flex-end"
+              sx={{ marginLeft: 2, marginRight: 2 }}
+            >
+              <p style={{ color: "red", textAlign: "center" }}>
+                Llene todos los Campos
+              </p>
             </Grid>
           )}
           <Grid item xs={12} justifyContent="flex-end">
             <DialogActions>
-              <Button onClick={(() => { handleClose(); clearFields() })}>Cerrar</Button>
+              <Button
+                onClick={() => {
+                  handleClose();
+                  clearFields();
+                }}
+              >
+                Cerrar
+              </Button>
               <Button type="submit" variant="contained" color="primary">
                 Guardar
               </Button>
