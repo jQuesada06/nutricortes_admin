@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -41,7 +40,9 @@ function Row(props) {
           {row.nombreUsuario}
         </TableCell>
         <TableCell component="th" scope="row">
-          {`${row.fecha.toDate().getDate().toString()}/${row.fecha.toDate().getMonth() + 1}/${row.fecha.toDate().getFullYear().toString()}`}
+          {
+            row.fecha.toString()
+          }
         </TableCell>
         <TableCell align="right">{row.precioTotal + " ₡"}</TableCell>
       </TableRow>
@@ -86,11 +87,11 @@ export default function TablaCarrito() {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-  
+
   const [data, setData] = useState([]);
   const [dataFiltered, setDataFiltered] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  
+
   useEffect(() => {
     const newFilteredRows = data.filter((row) =>
       Object.values(row).some((value) =>
@@ -121,26 +122,26 @@ export default function TablaCarrito() {
         Carrito
       </Typography>
       <SearchBar
-            onSearch={(searchTerm) => setSearchQuery(searchTerm)}
-          />
-    <TableContainer component={Paper} className='main-container'>
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell> Cliente</TableCell>
-            <TableCell> Fecha</TableCell>
-            <TableCell align="right">Precio Total</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-            <Row key={row.id} row={row} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-    <TablePagination
+        onSearch={(searchTerm) => setSearchQuery(searchTerm)}
+      />
+      <TableContainer component={Paper} className='main-container'>
+        <Table aria-label="collapsible table">
+          <TableHead>
+            <TableRow>
+              <TableCell />
+              <TableCell> Cliente</TableCell>
+              <TableCell> Fecha</TableCell>
+              <TableCell align="right">Precio Total</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+              <Row key={row.id} row={row} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
         component="div"
         count={dataFiltered.length}
         page={page}
