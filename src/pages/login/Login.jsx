@@ -66,23 +66,19 @@ const Login = ({ logged, setLogged }) => {
       const querySnapshot = await getDocs(q);
 
       if (querySnapshot.empty) {
-        const confirmed = window.confirm(
-          "Usuario no registrado. Redireccionar a Registro de Usuarios?"
-        );
-        if (confirmed) {
-          navigate("/signup");
-          return;
-        }
-      } else {
-        resetAllInputs();
-        toast.success("Loggeado", {
+        toast.error("Usuario no registrado.", {
           autoClose: 3000,
         });
-        const userData = querySnapshot.docs[0].data();
-        localStorage.setItem("userData", JSON.stringify(userData));
-        localStorage.setItem("isLogged", "true");
-        setLogged(true);
+        return;
       }
+      resetAllInputs();
+      toast.success("Loggeado", {
+        autoClose: 3000,
+      });
+      const userData = querySnapshot.docs[0].data();
+      localStorage.setItem("userData", JSON.stringify(userData));
+      localStorage.setItem("isLogged", "true");
+      setLogged(true);
     } catch (error) {
       toast.error("Usuario Inválido", { autoClose: 3000 });
     }
@@ -98,27 +94,23 @@ const Login = ({ logged, setLogged }) => {
       const querySnapshot = await getDocs(q);
 
       if (querySnapshot.empty) {
-        const confirmed = window.confirm(
-          "Usuario no registrado. Redireccionar a Registro de Usuarios?"
-        );
-        if (confirmed) {
-          navigate("/signup");
-          return;
-        }
-      } else {
-        resetAllInputs();
-        toast.success("Loggeado con Google", {
+        toast.error("Usuario no registrado.", {
           autoClose: 3000,
         });
-        const userData = querySnapshot.docs[0].data();
-        localStorage.setItem("userData", JSON.stringify(userData));
-        localStorage.setItem("isLogged", "true");
-
-        setLogged(true);
+        return;
       }
+      resetAllInputs();
+      toast.success("Loggeado con Google", {
+        autoClose: 3000,
+      });
+      const userData = querySnapshot.docs[0].data();
+      localStorage.setItem("userData", JSON.stringify(userData));
+      localStorage.setItem("isLogged", "true");
+
+      setLogged(true);
     } catch (error) {
       console.log(error);
-      toast.error("Error signing in with Google", { autoClose: 3000 });
+      toast.error("Usuario Inválido", { autoClose: 3000 });
     }
   };
 
@@ -166,10 +158,6 @@ const Login = ({ logged, setLogged }) => {
             Login with Google
           </Button>
         </div>
-
-        <p>
-          Create an account? <NavLink to="/signup">Sign up</NavLink>
-        </p>
       </Paper>
     </Box>
   );
