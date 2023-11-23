@@ -23,8 +23,7 @@ export default function AccountMenu({ setLogged }) {
   };
 
   const logOut = () => {
-    localStorage.setItem("isLogged", "false");
-    localStorage.removeItem("userData");
+    localStorage.clear();
     setLogged(false);
   };
   return (
