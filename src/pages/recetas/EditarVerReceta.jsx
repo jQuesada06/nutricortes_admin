@@ -244,16 +244,16 @@ const EditarReceta = (props) => {
           )}
 
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
-            {imageURL && (
+            {imageURL || imagen ? (
               <div>
                 <img
-                  src={imageURL}
+                  src={imageURL || imagen}
                   alt={`Receta-${titulo}`}
                   style={{ maxWidth: "100px" }}
                 />
-                <Button onClick={handleRemoveImage}>X</Button>
+                {!flagView && <Button onClick={handleRemoveImage}>X</Button>}
               </div>
-            )}
+            ) : null}
           </Grid>
 
           {!flagView && formError && (
