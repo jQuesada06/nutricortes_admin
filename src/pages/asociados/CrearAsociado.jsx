@@ -17,87 +17,97 @@ import "./Asociados.css";
 const CrearConsultorio = (props) => {
   const { onClose, open, onCreate } = props;
   const [nombre, setNombre] = useState("");
-  const [logo, setLogo] = useState("");
+  const [logo, setLogo] = useState(null);
+  const [logoURL, setLogoURL] = useState(null);
   const [url, setUrl] = useState("");
-  const [imagePreview, setImagePreview] = useState(null);
 
   const [formError, setFormError] = useState(false);
 
   const handleClose = () => onClose();
   const handleNameChange = (event) => setNombre(event.target.value);
+  const handleUrlChange = (event) => setUrl(event.target.value);
+
   const handleLogoChange = (event) => {
     const file = event.target.files[0];
+    setLogo(file);
     if (file) {
       const reader = new FileReader();
-
-      reader.onload = (e) => {
-        setImagePreview(e.target.result);
+      reader.onload = () => {
+        setLogoURL(reader.result);
       };
-
       reader.readAsDataURL(file);
     }
   };
-  const handleUrlChange = (event) => setUrl(event.target.value);
-  const handleRemoveLogo = () => {
-    setImagePreview(null);
+
+  const uploadImage = async () => {
+    if (!logo) {
+      toast.error("Debe seleccionar un archivo.", {
+        autoClose: 5000,
+      });
+      return null;
+    }
+    const timestamp = new Date().getTime();
+    const imageName = `${timestamp}_${logo.name}`;
+    const logosRef = ref(storage, `asociados/${imageName}`);
+    try {
+      await uploadBytes(logosRef, logo);
+
+      const downloadURL = await getDownloadURL(logosRef);
+      return downloadURL;
+    } catch (error) {
+      toast.error("Hubo un error al cargar la imagen", {
+        autoClose: 3000,
+      });
+      return null;
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setLogo(null);
+    setLogoURL(null);
   };
 
   const handleCreate = async () => {
-    const collectionRef = collection(db, "asociados");
-
-    let imageUrl = "";
-
-    if (imagePreview) {
+    const urlLogo = await uploadImage();
+    if (urlLogo) {
+      const collectionRef = collection(db, "asociados");
       try {
-        const storageRef = ref(
-          storage,
-          `logos/${new Date().getTime()}_${imagePreview.name}`
-        );
-        await uploadBytes(storageRef, imagePreview);
-        imageUrl = await getDownloadURL(storageRef);
+        const asociado = {
+          Nombre: nombre,
+          Logo: urlLogo,
+          URL: url,
+        };
+
+        const docRef = await addDoc(collectionRef, asociado);
+        asociado.id = docRef.id;
+        onCreate(asociado);
+        toast.success("Agregado correctamente", {
+          autoClose: 3000,
+        });
+        clearFields();
+        handleClose();
       } catch (error) {
-        console.error("Error uploading image to Firebase Storage", error);
-        toast.error("Error al subir la imagen", { autoClose: 3000 });
-        return;
+        toast.error("Hubo un error al agregar", {
+          autoClose: 3000,
+        });
       }
     }
-
-    try {
-      const asociado = {
-        Nombre: nombre,
-        Logo: imageUrl,
-        URL: url,
-      };
-
-      const docRef = await addDoc(collectionRef, asociado);
-      asociado.id = docRef.id;
-      onCreate(asociado);
-      toast.success("Agregado correctamente", {
-        autoClose: 3000,
-      });
-    } catch (error) {
-      toast.error("Hubo un error al agregar", {
-        autoClose: 3000,
-      });
-    }
-
-    clearFields();
-    handleClose();
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (nombre === "" || !imagePreview || url === "") {
+    if (nombre === "" || !logo || url === "") {
       setFormError(true);
       return;
     }
-    setFormError(false);
     handleCreate();
+    setFormError(false);
   };
+
   const clearFields = () => {
     setNombre("");
-    setLogo("");
     setUrl("");
-    setImagePreview(null);
+    setLogo(null);
+    setLogoURL(null);
   };
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -115,32 +125,35 @@ const CrearConsultorio = (props) => {
               onChange={handleNameChange}
             />
           </Grid>
+
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <input
               accept="image/*"
               style={{ display: "none" }}
-              id="logo-file"
+              id="imagen-file"
               type="file"
               onChange={handleLogoChange}
             />
-            <label htmlFor="logo-file">
+            <label htmlFor="imagen-file">
               <Button variant="outlined" component="span">
-                Seleccionar Logo
+                Seleccionar Imagen
               </Button>
             </label>
           </Grid>
+
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
-            {imagePreview && (
+            {logoURL && (
               <div>
                 <img
-                  src={imagePreview}
-                  alt={`Logo-${nombre}`}
+                  src={logoURL}
+                  alt={`Asociado-${nombre}`}
                   style={{ maxWidth: "100px" }}
                 />
-                <Button onClick={handleRemoveLogo}>X</Button>
+                <Button onClick={handleRemoveImage}>X</Button>
               </div>
             )}
           </Grid>
+
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
               label="URL"
