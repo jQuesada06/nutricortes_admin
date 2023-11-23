@@ -33,7 +33,7 @@ const EditarEbook = (props) => {
   const { onClose, open, object, onUpdate, flagView } = props;
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
-  const [precio, setPrecio] = useState("");
+  const [precio, setPrecio] = useState(null);
   const [formError, setFormError] = useState(false);
   const [imageChanged, setImageChanged] = useState(false);
   const [imageUrlToDelete, setImageUrlToDelete] = useState('');
@@ -68,7 +68,13 @@ const EditarEbook = (props) => {
   const handleClose = () => onClose();
   const handleNameChange = (event) => setNombre(event.target.value);
   const handleDescriptionChange = (event) => setDescripcion(event.target.value);
-  const handlePrecioChange = (event) => setPrecio(event.target.value);
+  const handlePrecioChange = (event) => {
+    const inputValue = event.target.value;
+    // Verifica si el valor ingresado es un número o si es una cadena vacía
+    if (inputValue === '' || (!isNaN(inputValue) && Number.isInteger(parseFloat(inputValue)))) {
+      setPrecio(inputValue === '' ? null : parseInt(inputValue, 10));
+    }
+  };
   const handleCategoryChange = (event) => setCategory(event.target.value);
 
   const deleteImage = async () => {
@@ -83,10 +89,7 @@ const EditarEbook = (props) => {
   };
 
   const uploadImage = async () => {
-    if (!image) {
-      alert("Selecciona un archivo primero.");
-      return;
-    }
+    
     const timestamp = new Date().getTime(); // Obtiene la marca de tiempo actual en milisegundos
     const imageName = `${timestamp}_${image.name}`;
     const ebooksRef = ref(storage, `ebooks/${imageName}`);
@@ -107,16 +110,16 @@ const EditarEbook = (props) => {
 
     if (imageChanged) {
       await deleteImage();
+      const url = await uploadImage();
+      setImageURL(url)
     }
-
-    const url = await uploadImage();
 
     try {
       const plan = {
         id: object.object.id,
         Nombre: nombre,
         Descripcion: descripcion,
-        Imagen: url,
+        Imagen: imageURL,
         Precio: precio,
         Categoria: category,
       };
@@ -136,7 +139,7 @@ const EditarEbook = (props) => {
   const clearFields = () => {
     setNombre("");
     setDescripcion("");
-    setPrecio("");
+    setPrecio(null);
     setImage(null);
     setImageURL(null);
     setCategory('');

@@ -28,7 +28,7 @@ const CrearEbook = (props) => {
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
 
-  const [precio, setPrecio] = useState("");
+  const [precio, setPrecio] = useState(null);
   const [formError, setFormError] = useState(false);
   const [imageURL, setImageURL] = useState(null);
   const [image, setImage] = useState(null);
@@ -49,7 +49,13 @@ const CrearEbook = (props) => {
   const handleClose = () => onClose();
   const handleNameChange = (event) => setNombre(event.target.value);
   const handleDescriptionChange = (event) => setDescripcion(event.target.value);
-  const handlePrecioChange = (event) => setPrecio(event.target.value);
+  const handlePrecioChange = (event) => {
+    const inputValue = event.target.value;
+    // Verifica si el valor ingresado es un número
+    if (!isNaN(inputValue)) {
+      setPrecio(parseInt(inputValue, 10)); // Convierte el valor a un número entero
+    }
+  };
   const handleCategoryChange = (event) => setCategory(event.target.value);
 
   const uploadImage = async () => {
@@ -115,7 +121,7 @@ const CrearEbook = (props) => {
   const clearFields = () => {
     setNombre("");
     setDescripcion("");
-    setPrecio("");
+    setPrecio(null);
     setImage(null);
     setImageURL(null);
     setCategory('')
