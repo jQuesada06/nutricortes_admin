@@ -111,7 +111,7 @@ function VerBiografia() {
 
 
  return( 
-  <Containerz>
+  <Container>
     <Grid container spacing={2} marginTop={'600px'}>
       <Grid item xs={6}>
         <Paper style={{ padding: '16px' }}>
