@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import { NavLink, useNavigate } from "react-router-dom";
 import { auth, googleProvider } from "../../firebase/config";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import {
@@ -19,8 +18,6 @@ import {
 const Login = ({ logged, setLogged }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const navigate = useNavigate();
 
   const resetAllInputs = () => {
     setEmail("");
@@ -71,12 +68,21 @@ const Login = ({ logged, setLogged }) => {
         });
         return;
       }
+
+      const checkRole = querySnapshot.docs[0].data();
+      if (!checkRole.role) {
+        toast.warning("No cuenta con permisos de administrador", {
+          autoClose: 3000,
+        });
+        return;
+      }
+
       resetAllInputs();
       toast.success("Loggeado", {
         autoClose: 3000,
       });
       const userData = querySnapshot.docs[0].data();
-      localStorage.setItem("userData", JSON.stringify(userData));
+      localStorage.setItem("userData", JSON.stringify(checkRole));
       localStorage.setItem("isLogged", "true");
       setLogged(true);
     } catch (error) {
@@ -94,11 +100,20 @@ const Login = ({ logged, setLogged }) => {
       const querySnapshot = await getDocs(q);
 
       if (querySnapshot.empty) {
-        toast.error("Usuario no registrado.", {
+        toast.error("Usuario no registrado", {
           autoClose: 3000,
         });
         return;
       }
+
+      const checkRole = querySnapshot.docs[0].data();
+      if (!checkRole.role) {
+        toast.warning("No cuenta con permisos de administrador", {
+          autoClose: 3000,
+        });
+        return;
+      }
+
       resetAllInputs();
       toast.success("Loggeado con Google", {
         autoClose: 3000,
