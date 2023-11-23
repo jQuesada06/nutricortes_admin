@@ -1,5 +1,5 @@
 /* Contenedor para nombre y código */
-.nombreCodigoContainer {
+z.nombreCodigoContainer {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
