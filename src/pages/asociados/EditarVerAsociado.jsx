@@ -135,20 +135,39 @@ const EditarConsultorio = (props) => {
 
           {!flagView && (
             <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
-              <input
-                accept="image/*"
-                style={{ display: "none" }}
-                id="imagen-file"
-                type="file"
-                onChange={handleLogoChange}
-              />
-              <label htmlFor="imagen-file">
-                <Button variant="outlined" component="span">
-                  Seleccionar Logo
-                </Button>
-              </label>
+              <Grid
+                item
+                xs={12}
+                sx={{ marginLeft: 2, marginRight: 2, marginBottom: 2 }}
+              >
+                <input
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  id="imagen-file"
+                  type="file"
+                  onChange={handleLogoChange}
+                />
+                <label htmlFor="imagen-file">
+                  <Button variant="outlined" component="span">
+                    Seleccionar Logo
+                  </Button>
+                </label>
+              </Grid>
             </Grid>
           )}
+
+          <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
+            {logoURL || logo ? (
+              <div>
+                <img
+                  src={logoURL || logo}
+                  alt={`Asociado-${nombre}`}
+                  style={{ maxWidth: "100px" }}
+                />
+                {!flagView && <Button onClick={handleRemoveImage}>X</Button>}
+              </div>
+            ) : null}
+          </Grid>
 
           <Grid item xs={12} sx={{ marginLeft: 2, marginRight: 2 }}>
             <TextField
